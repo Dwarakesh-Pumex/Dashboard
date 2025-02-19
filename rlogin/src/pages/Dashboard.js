@@ -12,7 +12,8 @@ import GpuCoreAllocationChart from '../components/GpuCoreAllocationChart';
 const Dashboard = () => {
   return (
     <div>
-    <h2 style={{color:"white"}}>GAL-NM-6234</h2>
+    <h7 style={{marginLeft:"100px",color:"white",fontSize:"20px"}}>SYSTEM ID</h7>
+    <h2 style={{marginTop:"5px",marginLeft:"100px",color:"white",fontSize:"35px"}}>GAL-NM-6234</h2>
     <Container maxWidth="lg" sx={{ backgroundColor: '#01141A', padding: '20px' }}>
       <Grid container spacing={3}>
 
