@@ -28,13 +28,14 @@
   color: #61dafb;
 }
 
-.legend-item-circle {
-  display: inline-block;
+.legend-circle {
   width: 12px;
   height: 12px;
   border-radius: 50%;
+  display: inline-block;
   margin-right: 5px;
 }
+
 
 
 @keyframes App-logo-spin {

@@ -4,7 +4,7 @@ import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
-const CpuUtilizationChart = () => {
+const StorageUtilizationChart = () => {
   const [cpuUsage, setCpuUsage] = useState(55);
   const [data, setData] = useState({
     labels: ["App1", "App2", "App3", "App4", "App5", "Other"],
@@ -13,6 +13,8 @@ const CpuUtilizationChart = () => {
         data: [10, 20, 15, 18, 12, 25],
         backgroundColor: ["#31B969", "#BFA836", "#1B5CC6", "#BF2525", "#703494", "#344247"],
         hoverBackgroundColor: ["#28A75A", "#A89030", "#1650A6", "#A01F1F", "#5E2B82", "#2A3535"],
+        borderWidth: 0,
+        hoverOffset: 6,
       },
     ],
   });
@@ -48,25 +50,57 @@ const CpuUtilizationChart = () => {
   }, []);
 
   const options = {
-    cutout: "90%", 
-    responsive: true,
+    cutout: "80%",
+    responsive: false,
+    circumference: 280,
+    rotation: -140,
     plugins: {
       legend: { display: true, position: "right" },
       tooltip: { enabled: true },
+      minMaxLabelPlugin: true, 
     },
   };
+  
 
   return (
     <div style={{ textAlign: "left", marginLeft: "25px" }}>
-      <h3 style={{ marginBottom: "5px" }}>Top Apps - CPU Utilization</h3>
-      <p style={{ marginTop: "0", fontSize: "14px" }}>
-        Min=0%, Max=100%, Current {cpuUsage}%
+      <h3 style={{ marginBottom: "5px" }}>Top Apps - GPU Utilization</h3>
+      <p style={{ marginBottom: "45px",marginTop: "0px", fontSize: "14px" }}>
+        MIN:0%  MAX:100%  CURRENT:{cpuUsage}%
       </p>
-      <div style={{ width: "250px", margin: "0 auto" }}>
-        <Doughnut data={data} options={options} />
-      </div>
+      <div style={{ width: "250px", margin: "0 auto",marginBottom: "70px", position:"relative" }}>
+              <Doughnut data={data} options={options} />
+              <svg
+                width="140"
+                height="140"
+                viewBox="0 0 120 120"
+                style={{ position: "absolute", top: "58%", left: "41%", transform: "translate(-50%, -50%)" }}
+              >
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="50"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeDasharray="3,7"
+                />
+                
+                <text x="50%" y="45%" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold">
+                  {cpuUsage}MB
+                </text>
+                <text x="50%" y="60%" textAnchor="middle" fill="#888888" fontSize="12">
+                  Utilized
+                </text>
+              </svg>
+            </div>
+            <div style={{ textAlign: "center", marginTop: "-70px",marginBottom:"48px"}}>
+             <span style={{  fontSize: "14px", color: "#888888",marginRight:"10px" }}>0MB</span>
+             <span style={{  fontSize: "14px", color: "#888888",marginLeft:"50px",marginRight:"38px" }}>400MB</span>
+            </div>
+
     </div>
   );
 };
 
-export default CpuUtilizationChart;
+export default StorageUtilizationChart;

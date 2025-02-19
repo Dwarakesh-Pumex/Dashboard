@@ -36,8 +36,10 @@ const CpuUtilizationChart = () => {
             data: [app1, app2, app3, app4, app5, other],
             backgroundColor: ["#31B969", "#BFA836", "#1B5CC6", "#BF2525", "#703494", "#344247"],
             hoverBackgroundColor: ["#28A75A", "#A89030", "#1650A6", "#A01F1F", "#5E2B82", "#2A3535"],
+            borderWidth: 0, 
+            hoverOffset: 6,
           },
-        ],
+        ],     
       });
     };
 
@@ -48,10 +50,10 @@ const CpuUtilizationChart = () => {
   }, []);
 
   const options = {
-    cutout: "85%", 
+    cutout: "80%", 
     responsive: false,
     circumference: 280,
-    rotation: -140,
+    rotation:-140,
     plugins: {
       legend: { display: true, position: "right" },
       tooltip: { enabled: true },
@@ -61,34 +63,41 @@ const CpuUtilizationChart = () => {
   return (
     <div style={{ textAlign: "left", marginLeft: "25px" }}>
       <h3 style={{ marginBottom: "5px" }}>Top Apps - CPU Utilization</h3>
-      <p style={{ marginTop: "0", fontSize: "14px" }}>
+      <p style={{ marginBottom: "45px",marginTop: "0px", fontSize: "14px" }}>
         MIN:0%  MAX:100%  CURRENT:{cpuUsage}%
       </p>
-      <div style={{ width: "250px", margin: "0 auto", position: "relative" }}>
-        <Doughnut data={data} options={options} />
-        <svg
-          width="120"
-          height="120"
-          viewBox="0 0 120 120"
-          style={{ position: "absolute", top: "135px", left: "30%", transform: "translate(-48%, -50%)" }}
-        >
-          <circle
-            cx="60"
-            cy="60"
-            r="50"
-            fill="none"
-            stroke="white"
-            strokeWidth="2"
-            strokeDasharray="3,7"
-          />
-          <text x="50%" y="45%" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold">
-            {cpuUsage}%
-          </text>
-          <text x="50%" y="60%" textAnchor="middle" fill="#888888" fontSize="12">
-            Utilization
-          </text>
-        </svg>
-      </div>
+      <div style={{ width: "250px", margin: "0 auto",marginBottom: "70px", position:"relative" }}>
+              <Doughnut data={data} options={options} />
+              <svg
+                width="140"
+                height="140"
+                viewBox="0 0 120 120"
+                style={{ position: "absolute", top: "58%", left: "41%", transform: "translate(-50%, -50%)" }}
+              >
+               
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="50"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeDasharray="3,7"
+                />
+                
+               
+                <text x="50%" y="45%" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold">
+                  {cpuUsage}%
+                </text>
+                <text x="50%" y="60%" textAnchor="middle" fill="#888888" fontSize="12">
+                  Utilization
+                </text>
+              </svg>
+            </div>
+            <div style={{ textAlign: "center", marginTop: "-70px",marginBottom:"48px"}}>
+             <span style={{  fontSize: "14px", color: "#888888",marginRight:"10px" }}>0%</span>
+             <span style={{  fontSize: "14px", color: "#888888",marginLeft:"50px",marginRight:"38px" }}>100%</span>
+            </div>
     </div>
   );
 };
