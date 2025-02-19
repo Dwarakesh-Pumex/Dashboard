@@ -4,7 +4,7 @@ import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
-const CpuUtilizationChart = () => {
+const MemoryUtilizationChart = () => {
   const [cpuUsage, setCpuUsage] = useState(55);
   const [data, setData] = useState({
     labels: ["App1", "App2", "App3", "App4", "App5", "Other"],
@@ -49,29 +49,30 @@ const CpuUtilizationChart = () => {
 
   const options = {
     cutout: "85%", 
-    responsive: false,
     circumference: 280,
-    rotation: -140,
+    rotation:-140,
+    responsive: true,
     plugins: {
-      legend: { display: true, position: "right" },
+      legend: { display: true, position: "right", },
       tooltip: { enabled: true },
     },
   };
 
   return (
     <div style={{ textAlign: "left", marginLeft: "25px" }}>
-      <h3 style={{ marginBottom: "5px" }}>Top Apps - CPU Utilization</h3>
+      <h3 style={{ marginBottom: "5px" }}>Top Apps - Memory Utilization</h3>
       <p style={{ marginTop: "0", fontSize: "14px" }}>
         MIN:0%  MAX:100%  CURRENT:{cpuUsage}%
       </p>
-      <div style={{ width: "250px", margin: "0 auto", position: "relative" }}>
+      <div style={{ width: "250px", margin: "0 auto", position:"relative" }}>
         <Doughnut data={data} options={options} />
         <svg
           width="120"
           height="120"
           viewBox="0 0 120 120"
-          style={{ position: "absolute", top: "135px", left: "30%", transform: "translate(-48%, -50%)" }}
+          style={{ position: "absolute", top: "54%", left: "31%", transform: "translate(-50%, -50%)" }}
         >
+          {/* Dotted Circle */}
           <circle
             cx="60"
             cy="60"
@@ -81,11 +82,13 @@ const CpuUtilizationChart = () => {
             strokeWidth="2"
             strokeDasharray="3,7"
           />
+          
+          {/* CPU Utilization Text */}
           <text x="50%" y="45%" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold">
-            {cpuUsage}%
+            {cpuUsage+1024}
           </text>
           <text x="50%" y="60%" textAnchor="middle" fill="#888888" fontSize="12">
-            Utilization
+            GB Used
           </text>
         </svg>
       </div>
@@ -93,4 +96,4 @@ const CpuUtilizationChart = () => {
   );
 };
 
-export default CpuUtilizationChart;
+export default MemoryUtilizationChart;

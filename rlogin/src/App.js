@@ -1,7 +1,6 @@
 import React from 'react';
 import Dashboard from './pages/Dashboard';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { AppBar, Toolbar, Typography, Button, Container } from '@mui/material';
 
 // Create a custom dark theme
 const theme = createTheme({

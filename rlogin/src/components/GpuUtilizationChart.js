@@ -48,10 +48,8 @@ const CpuUtilizationChart = () => {
   }, []);
 
   const options = {
-    cutout: "85%", 
-    responsive: false,
-    circumference: 280,
-    rotation: -140,
+    cutout: "90%", 
+    responsive: true,
     plugins: {
       legend: { display: true, position: "right" },
       tooltip: { enabled: true },
@@ -62,32 +60,10 @@ const CpuUtilizationChart = () => {
     <div style={{ textAlign: "left", marginLeft: "25px" }}>
       <h3 style={{ marginBottom: "5px" }}>Top Apps - CPU Utilization</h3>
       <p style={{ marginTop: "0", fontSize: "14px" }}>
-        MIN:0%  MAX:100%  CURRENT:{cpuUsage}%
+        Min=0%, Max=100%, Current {cpuUsage}%
       </p>
-      <div style={{ width: "250px", margin: "0 auto", position: "relative" }}>
+      <div style={{ width: "250px", margin: "0 auto" }}>
         <Doughnut data={data} options={options} />
-        <svg
-          width="120"
-          height="120"
-          viewBox="0 0 120 120"
-          style={{ position: "absolute", top: "135px", left: "30%", transform: "translate(-48%, -50%)" }}
-        >
-          <circle
-            cx="60"
-            cy="60"
-            r="50"
-            fill="none"
-            stroke="white"
-            strokeWidth="2"
-            strokeDasharray="3,7"
-          />
-          <text x="50%" y="45%" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold">
-            {cpuUsage}%
-          </text>
-          <text x="50%" y="60%" textAnchor="middle" fill="#888888" fontSize="12">
-            Utilization
-          </text>
-        </svg>
       </div>
     </div>
   );
