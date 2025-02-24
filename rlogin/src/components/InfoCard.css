@@ -1,0 +1,28 @@
+
+.row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 1;
+    padding: 10px;
+  }
+  
+  .left {
+    margin-right: 10px;
+  }
+  
+  .right {
+    margin-left: 10px;
+  }
+  
+  h3 {
+    font-size: 18px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+  }
+  
+  hr {
+    border-color: #444444;
+  }
+  

@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    background: #102127;
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+}
+
+.column {
+    width: 48%; 
+    min-width: 300px; 
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.left {
+    background-color: #1A2C33;
+}
+
+.right {
+    background-color: #14272E;
+}

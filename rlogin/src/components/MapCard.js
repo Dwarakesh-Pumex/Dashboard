@@ -14,11 +14,12 @@ const customIcon = new L.Icon({
 });
 
 export default function MapCard() {
-  const position = [36.7783, -119.4179]; 
+  const position = [47.524292, -122.301727]; 
 
   return (
     <CardContent>
-      <div style={{ height: "300px", borderRadius: "10px", overflow: "hidden", background: "#01141A" }}>
+
+      <div style={{alignItems:"center",height:"400px",width:"340px", borderRadius: "10px", background: "#01141A" }}>
         <MapContainer
           center={position}
           zoom={6}

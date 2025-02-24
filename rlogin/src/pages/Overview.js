@@ -17,23 +17,24 @@ export default function Overview() {
 
           {/* First Section */}
           <Grid item xs={12}>
-            <Grid container spacing={2}>
-
-              {/* Information Card */}
-              <Grid item xs={12} md={6}>
-                <Card sx={{ backgroundColor: "#102127", padding: "15px" }}>
-                  <InfoCard />
-                </Card>
-              </Grid>
-
-              {/* Map Section */}
-              <Grid item xs={12} md={6}>
-                <Card sx={{ backgroundColor: "#102127", padding: "15px" }}>
-                  <MapCard />  {/* Use MapCard here */}
-                </Card>
-              </Grid>
-            </Grid>
+        <Grid container spacing={2}>
+          
+          {/* Information Card - Larger Width */}
+          <Grid item xs={12} md={8}>
+            <Card sx={{ backgroundColor: "#102127", padding: "15px" }}>
+              <InfoCard />
+            </Card>
           </Grid>
+
+          {/* Map Section - Smaller Width */}
+          <Grid item xs={12} md={4}>
+            <Card sx={{ backgroundColor: "#102127" }}>
+              <MapCard />
+            </Card>
+          </Grid>
+
+        </Grid>
+      </Grid>
 
           {/* Environmental Metrics */}
           <Grid item xs={12}>
