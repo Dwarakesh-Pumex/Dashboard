@@ -1,37 +1,44 @@
-import React from 'react';
-import Dashboard from './pages/Dashboard';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { AppBar, Toolbar, Button } from "@mui/material";
+import Dashboard from "./pages/Dashboard";
+import Overview from "./pages/Overview";
 
-// Create a custom dark theme
 const theme = createTheme({
   palette: {
-    mode: 'dark', // Enables dark mode
-    primary: {
-      main: '#01141A', // Dark teal as the primary color
-    },
-    secondary: {
-      main: '#26A69A', // Light teal for accents
-    },
-    background: {
-      default: '#01141A', // Set the background color to a dark shade close to #01141A
-      paper: '#06282C', // Lighter dark color for card-like components
-    },
-    text: {
-      primary: '#E0E0E0', // Light gray text for good contrast on dark background
-      secondary: '#B0B0B0', // Slightly lighter secondary text
-    },
-    action: {
-      active: '#26A69A', // Use secondary color for active icons and buttons
-    },
+    mode: "dark",
+    primary: { main: "#01141A" },
+    secondary: { main: "#26A69A" },
+    background: { default: "#01141A", paper: "#06282C" },
+    text: { primary: "#E0E0E0", secondary: "#B0B0B0" },
+    action: { active: "#26A69A" },
   },
 });
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <div>
-      <Dashboard />
-    </div>  
+      <Router>
+        {/* Navigation Bar */}
+        <AppBar position="fixed" sx={{ backgroundColor: "#01141A" }}>
+          <Toolbar sx={{ display: "flex", justifyContent: "flex-end" }}>
+            
+            <Button color="inherit" component={Link} to="/">
+              Dashboard
+            </Button>
+            <Button color="inherit" component={Link} to="/overview">
+              Overview
+            </Button>
+          </Toolbar>
+        </AppBar>
+
+        {/* Page Routing */}
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/overview" element={<Overview />} />
+        </Routes>
+      </Router>
     </ThemeProvider>
   );
 };

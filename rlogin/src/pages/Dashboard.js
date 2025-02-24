@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Paper, Card } from '@mui/material';
+import { Container,Grid, Paper, Card } from '@mui/material';
 import CpuUtilizationChart from '../components/CpuUtilizationChart';
 import CpuCoreAllocationChart from '../components/CpuCoreAllocationChart';
 import MemoryCoreAllocationChart from '../components/MemoryCoreAllocationChart'
@@ -42,6 +42,7 @@ const Dashboard = () => {
         
       </Grid>
     </Container>
+
     <Container maxWidth="lg" sx={{ backgroundColor: '#01141A', padding: '20px' }}>
       <Grid container spacing={3}>
 

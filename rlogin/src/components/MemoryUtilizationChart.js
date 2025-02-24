@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
-import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
 
-Chart.register(ArcElement, Tooltip, Legend);
 
 const MemoryUtilizationChart = () => {
   const [cpuUsage, setCpuUsage] = useState(55);
