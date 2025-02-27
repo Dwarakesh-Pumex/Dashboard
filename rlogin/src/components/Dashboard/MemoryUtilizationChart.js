@@ -59,7 +59,7 @@ const MemoryUtilizationChart = () => {
   };
 
   return (
-    <div style={{ textAlign: "left", marginLeft: "25px" }}>
+    <div style={{ textAlign: "left", marginLeft: "10px" }}>
       <h3 style={{ marginBottom: "5px" }}>Top Apps - Memory Utilization</h3>
       <p style={{ marginBottom: "45px",marginTop: "0px", fontSize: "14px" }}>
         MIN:0%  MAX:100%  CURRENT:{cpuUsage}%

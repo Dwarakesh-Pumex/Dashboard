@@ -23,14 +23,14 @@ const Dashboard = () => {
             <h2 style={{ color: '#FFF', marginBottom: '15px' }}>CPU</h2>
             <Grid container spacing={2}>
               {/* CPU Utilization Card */}
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={4}>
                 <Card sx={{ backgroundColor: '#102127', padding: '15px' }}>
                   <CpuUtilizationChart />
                 </Card>
               </Grid>
 
               {/* CPU Core Allocation Card */}
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={8}>
                 <Card sx={{ backgroundColor: '#102127', padding: '15px' }}>
                   <CpuCoreAllocationChart />
                 </Card>
@@ -52,14 +52,14 @@ const Dashboard = () => {
             <h2 style={{ color: '#FFF', marginBottom: '15px' }}>Memory</h2>
             <Grid container spacing={2}>
               {/* Memory Utilization Card */}
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={4}>
                 <Card sx={{ backgroundColor: '#102127', padding: '15px' }}>
                   <MemoryUtilizationChart />
                 </Card>
               </Grid>
 
               {/* Memory Allocation Card */}
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={8}>
                 <Card sx={{ backgroundColor: '#102127', padding: '15px' }}>
                   <MemoryCoreAllocationChart />
                 </Card>
@@ -80,14 +80,14 @@ const Dashboard = () => {
             <h2 style={{ color: '#FFF', marginBottom: '15px' }}>Storage</h2>
             <Grid container spacing={2}>
               {/* Storage Utilization Card */}
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={4}>
                 <Card sx={{ backgroundColor: '#102127', padding: '15px' }}>
                   <StorageUtilizationChart />
                 </Card>
               </Grid>
 
               {/* Storage Allocation Graph */}
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={8}>
                 <Card sx={{ backgroundColor: '#102127', padding: '15px' }}>
                   <StorageCoreAllocationChart />
                 </Card>
@@ -108,14 +108,14 @@ const Dashboard = () => {
             <h2 style={{ color: '#FFF', marginBottom: '15px' }}>GPU</h2>
             <Grid container spacing={2}>
               {/* GPU Utilization Card */}
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={4}>
                 <Card sx={{ backgroundColor: '#102127', padding: '15px' }}>
                   <GpuUtilizationChart />
                 </Card>
               </Grid>
 
               {/* GPU Core Allocation Card */}
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={8}>
                 <Card sx={{ backgroundColor: '#102127', padding: '15px' }}>
                   <GpuCoreAllocationChart />
                 </Card>

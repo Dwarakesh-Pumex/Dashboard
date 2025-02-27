@@ -7,7 +7,7 @@ const StorageCoreAllocationChart = () => {
   useEffect(() => {
     const generateData = () => {
       let newData = [];
-      const times = ["09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30"];
+      const times = ["09:30", "10:00", "10:30", "11:00", "11:30", "12:00","12:30","1:00","1:30","2:00","2:30"];
       let totalSum=0;
 
       times.forEach((time) => {
