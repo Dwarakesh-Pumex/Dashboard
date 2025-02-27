@@ -1,7 +1,7 @@
 import React from 'react';
-import {Container,Grid,Paper,Card} from '@mui/material';
-import TemperatureCard from '../components/TemperatureCard';
-import HumidityCard from '../components/HumidityCard';
+import {Grid,Paper,Card} from '@mui/material';
+import TemperatureCard from './TemperatureCard';
+import HumidityCard from './HumidityCard';
 
 
 export default function EnvironmentalMetrics(){

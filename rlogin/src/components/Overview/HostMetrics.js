@@ -1,8 +1,8 @@
 import React from 'react';
-import {Container,Grid,Paper,Card} from '@mui/material';
-import TotalCpuUtilization from '../components/TotalCpuUtilization';
-import TotalMemoryUtilization from '../components/TotalMemoryUtilization';
-import TotalStorageUtilization from '../components/TotalStorageUtilization';
+import {Grid,Paper,Card} from '@mui/material';
+import TotalCpuUtilization from './TotalCpuUtilization';
+import TotalMemoryUtilization from './TotalMemoryUtilization';
+import TotalStorageUtilization from './TotalStorageUtilization';
 
 export default function HostMetrics(){
     return(

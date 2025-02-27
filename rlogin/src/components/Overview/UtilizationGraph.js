@@ -1,8 +1,8 @@
 import React from "react";
 import { Grid, Paper, Card } from "@mui/material";
-import TotalCpuUtilizationGraph from "../components/TotalCpuUtilizationGraph";
-import TotalMemoryUtilizationGraph from "../components/TotalMemoryUtilizationGraph";
-import TotalStorageUtilizationGraph from "../components/TotalStorageUtilizationGraph";
+import TotalCpuUtilizationGraph from "./TotalCpuUtilizationGraph";
+import TotalMemoryUtilizationGraph from "./TotalMemoryUtilizationGraph";
+import TotalStorageUtilizationGraph from "./TotalStorageUtilizationGraph";
 
 export default function UtilizationGraph() {
   return (
@@ -15,7 +15,7 @@ export default function UtilizationGraph() {
         <Grid 
           container 
           spacing={3} 
-          sx={{ width: "100%", justifyContent: "center" }} // Centers items horizontally
+          sx={{ width: "100%", justifyContent: "center" }} 
         >
           {/* Total CPU Utilization Graph */}
           <Grid item xs={12} sm={6} md={4}>

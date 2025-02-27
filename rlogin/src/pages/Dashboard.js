@@ -1,13 +1,13 @@
 import React from 'react';
 import { Container,Grid, Paper, Card } from '@mui/material';
-import CpuUtilizationChart from '../components/CpuUtilizationChart';
-import CpuCoreAllocationChart from '../components/CpuCoreAllocationChart';
-import MemoryCoreAllocationChart from '../components/MemoryCoreAllocationChart'
-import MemoryUtilizationChart from '../components/MemoryUtilizationChart';
-import StorageUtilizationChart from '../components/StorageUtilizationChart';
-import StorageCoreAllocationChart from '../components/StorageCoreAllocationChart';
-import GpuUtilizationChart from '../components/GpuUtilizationChart';
-import GpuCoreAllocationChart from '../components/GpuCoreAllocationChart';
+import CpuUtilizationChart from '../components/Dashboard/CpuUtilizationChart';
+import CpuCoreAllocationChart from '../components/Dashboard/CpuCoreAllocationChart';
+import MemoryCoreAllocationChart from '../components/Dashboard/MemoryCoreAllocationChart'
+import MemoryUtilizationChart from '../components/Dashboard/MemoryUtilizationChart';
+import StorageUtilizationChart from '../components/Dashboard/StorageUtilizationChart';
+import StorageCoreAllocationChart from '../components/Dashboard/StorageCoreAllocationChart';
+import GpuUtilizationChart from '../components/Dashboard/GpuUtilizationChart';
+import GpuCoreAllocationChart from '../components/Dashboard/GpuCoreAllocationChart';
 
 const Dashboard = () => {
   return (

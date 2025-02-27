@@ -1,10 +1,10 @@
 import React from "react"; 
 import { Container, Grid, Card } from "@mui/material";
-import InfoCard from "../components/InfoCard";
-import HostMetrics from "../components/HostMetrics";
-import EnvironmentalMetrics from "../components/EnvironmentalMetrics";
-import UtilizationGraph from "../components/UtilizationGraph";
-import MapCard from "../components/MapCard"; // Import MapCard
+import InfoCard from "../components/Overview/InfoCard";
+import HostMetrics from "../components/Overview/HostMetrics";
+import EnvironmentalMetrics from "../components/Overview/EnvironmentalMetrics";
+import UtilizationGraph from "../components/Overview/UtilizationGraph";
+import MapCard from "../components/Overview/MapCard"; // Import MapCard
 
 export default function Overview() {
   return (
