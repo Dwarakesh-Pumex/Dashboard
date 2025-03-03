@@ -60,7 +60,7 @@ const CpuCoreAllocationChart = () => {
           <XAxis dataKey="name" stroke="#CCC" />
           <YAxis stroke="#CCC" />
           <Tooltip />
-          <Legend align="right" verticalAlign="middle" layout="vertical" />
+          <Legend align="right" verticalAlign="middle" layout="vertical" wrapperStyle={{ left: 610 }}/>
           <Bar dataKey="App1" stackId="a" fill="#31B969" />
           <Bar dataKey="App2" stackId="a" fill="#BFA836" />
           <Bar dataKey="App3" stackId="a" fill="#1B5CC6" />

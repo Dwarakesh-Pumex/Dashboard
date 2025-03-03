@@ -1,32 +1,36 @@
 import React from "react"; 
-import { Container, Grid, Card } from "@mui/material";
+import { Container, Grid, Card, Box } from "@mui/material";
 import InfoCard from "../components/Overview/InfoCard";
 import HostMetrics from "../components/Overview/HostMetrics";
 import EnvironmentalMetrics from "../components/Overview/EnvironmentalMetrics";
 import UtilizationGraph from "../components/Overview/UtilizationGraph";
-import MapCard from "../components/Overview/MapCard"; // Import MapCard
-
+import MapCard from "../components/Overview/MapCard";
+import Side from "../components/Navigation/Side";
 export default function Overview() {
   return (
     <div>
-      <h7 style={{ marginLeft: "100px", color: "white", fontSize: "20px" }}>SYSTEM ID</h7>
-      <h2 style={{ marginTop: "5px", marginLeft: "100px", color: "white", fontSize: "35px" }}>GAL-NM-6234</h2>
+      {/* System Info Section */}
+      <Box sx={{ marginLeft: "180px", marginBottom: "20px",marginTop:"25px" }}>
+        <h4 style={{ color: "white", fontSize: "20px", marginBottom: "5px" }}>SYSTEM ID</h4>
+        <h2 style={{ color: "white", fontSize: "35px",marginTop:"5px" }}>GAL-NM-6234</h2>
+      </Box>
 
-      <Container maxWidth="lg" sx={{ backgroundColor: "#01141A", padding: "20px" }}>
+      <Container maxWidth="lg" sx={{ backgroundColor: '#01141A', padding: '20px' }}>
         <Grid container spacing={3}>
+          <Side />
 
           {/* First Section */}
           <Grid item xs={12}>
         <Grid container spacing={2}>
           
-          {/* Information Card - Larger Width */}
+          {/* Information Card */}
           <Grid item xs={12} md={8}>
             <Card sx={{ backgroundColor: "#102127", padding: "15px" }}>
               <InfoCard />
             </Card>
           </Grid>
 
-          {/* Map Section - Smaller Width */}
+          {/* Map Section */}
           <Grid item xs={12} md={4}>
             <Card sx={{ backgroundColor: "#102127" }}>
               <MapCard />

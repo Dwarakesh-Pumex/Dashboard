@@ -1,16 +1,4 @@
-body {
-    background-image: url("/public/giphy.gif");
-    background-size:cover;
-    background-color: #2b2828;
-    background-position: center;
-    background-repeat: no-repeat;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
+
   .auth-container {
     display: flex;
     justify-content: center;

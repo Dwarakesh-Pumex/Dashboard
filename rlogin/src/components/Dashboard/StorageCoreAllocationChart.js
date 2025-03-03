@@ -47,12 +47,13 @@ const StorageCoreAllocationChart = () => {
       <p style={{ marginTop: "0", fontSize: "14px", opacity: 0.8 }}>
         AVERAGE ALLOCATION ACROSS ALL APPS: {Avg} GB 
       </p>
+      
       <ResponsiveContainer width="100%" height={250}>
         <LineChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
           <XAxis dataKey="name" stroke="#CCC" />
           <YAxis stroke="#CCC" />
           <Tooltip />
-          <Legend align="right" verticalAlign="middle" layout="vertical" />
+          <Legend align="right" verticalAlign="middle" layout="vertical"  wrapperStyle={{ left: 610 }}/>
           <Line type="monotone" dataKey="App1" stroke="#31B969" />
           <Line type="monotone" dataKey="App2" stroke="#BFA836" />
           <Line type="monotone" dataKey="App3" stroke="#1B5CC6" />

@@ -15,7 +15,7 @@ export default function UtilizationGraph() {
         <Grid 
           container 
           spacing={3} 
-          sx={{ width: "100%", justifyContent: "center" }} 
+          sx={{ width: "100%", justifyContent: "center",marginLeft:"-10px" }} 
         >
           {/* Total CPU Utilization Graph */}
           <Grid item xs={12} sm={6} md={4}>

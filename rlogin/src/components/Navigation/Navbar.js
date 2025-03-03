@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AppBar, Toolbar, Button, Typography } from "@mui/material";
-import { UserContext } from "../App";
+import { UserContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {

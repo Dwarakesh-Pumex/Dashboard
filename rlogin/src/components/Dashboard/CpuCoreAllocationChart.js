@@ -8,7 +8,7 @@ const CpuCoreAllocationChart = () => {
   useEffect(() => {
     const generateData = () => {
       let newData = [];
-      const times = ["10:00", "10:30", "11:00", "11:30", "12:00","12:30","1:00","1:30","2:00","2:30"];
+      const times = ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "1:00", "1:30", "2:00", "2:30"];
       let totalAllocation = 0;
       let totalCount = 0;
 
@@ -36,7 +36,7 @@ const CpuCoreAllocationChart = () => {
         });
 
         totalAllocation += app1 + app2 + app3 + app4 + app5;
-        totalCount += 5; 
+        totalCount += 5;
       });
 
       setData(newData);
@@ -57,10 +57,10 @@ const CpuCoreAllocationChart = () => {
       </p>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-          <XAxis dataKey="name" stroke="#CCC" />
-          <YAxis stroke="#CCC" />
+        <XAxis dataKey="name" stroke="#CCC" interval="preserveEnd" tickFormatter={(value, index) => (index % Math.ceil(data.length /2 ) === 0 || index === data.length - 1 ? `${value}AM` : "")}/>
+          <YAxis stroke="#CCC" interval="preserveEnd"/>
           <Tooltip />
-          <Legend align="right" verticalAlign="middle" layout="vertical" />
+          <Legend align="right" verticalAlign="middle" layout="vertical" wrapperStyle={{ left: 610 }} />
           <Bar dataKey="App1" stackId="a" fill="#31B969" />
           <Bar dataKey="App2" stackId="a" fill="#BFA836" />
           <Bar dataKey="App3" stackId="a" fill="#1B5CC6" />

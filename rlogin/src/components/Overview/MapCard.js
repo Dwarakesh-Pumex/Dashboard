@@ -19,7 +19,7 @@ export default function MapCard() {
   return (
     <CardContent>
 
-      <div style={{alignItems:"center",height:"400px",width:"340px", borderRadius: "10px", background: "#01141A" }}>
+      <div style={{alignItems:"center",height:"425px",width:"340px", borderRadius: "10px", background: "#01141A" }}>
         <MapContainer
           center={position}
           zoom={6}
