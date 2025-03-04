@@ -5,7 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Overview from "./pages/Overview";
 import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute"; 
-
+localStorage.removeItem("jwtToken");
 const theme = createTheme({
   palette: {
     mode: "dark",

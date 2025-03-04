@@ -23,7 +23,7 @@ type Claims struct {
 
 // Enable CORS Middleware
 func enableCORS(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000") // Allow React frontend
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
@@ -50,7 +50,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Dummy user validation (Replace with database check)
-	if creds.Email != "test@example.com" || creds.Password != "password123" {
+	if creds.Email != "user@example.com" || creds.Password != "password123" {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 		return
 	}

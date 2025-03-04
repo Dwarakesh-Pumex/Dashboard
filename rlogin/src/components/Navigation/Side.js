@@ -46,11 +46,12 @@ export default function Sidebar() {
       await axios.post(
         "http://localhost:8080/api/auth/logout",
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+        { headers: { Authorization: `Bearer ${token}`}
+     } );
 
       localStorage.removeItem("jwtToken");
       navigate("/login");
+      alert("Succesfully logged out, Redirecting to login page");
     } catch (err) {
       console.error("Logout failed:", err);
     }
@@ -78,7 +79,7 @@ export default function Sidebar() {
             opacity: "0.7",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between", // Ensures the Logout button stays at the bottom
+            justifyContent: "space-between", 
           },
         }}
       >
@@ -93,7 +94,7 @@ export default function Sidebar() {
                 component={Link}
                 to="/dashboard"
                 sx={{
-                  backgroundColor: location.pathname === "/" ? "#134E2A" : "transparent",
+                  backgroundColor: location.pathname === "/dashboard" ? "#134E2A" : "transparent",
                   "&:hover": { backgroundColor: "#055060" },
                 }}
               >

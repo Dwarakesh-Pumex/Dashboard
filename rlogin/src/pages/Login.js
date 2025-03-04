@@ -12,6 +12,10 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
+      if (!email || !password) {
+        setError("Both Email and Password fields are required");
+        return;
+      }
       const response = await axios.post(
         "http://localhost:8080/api/auth/login",
         { email, password },
@@ -27,6 +31,7 @@ const Login = () => {
   };
 
   return (
+    <div style={{backgroundImage: "url(/giphy.gif)", backgroundSize: "cover", height: "100vh",backgroundRepeat: "no-repeat"}}>
     <div className="auth-container">
       <div className="auth-box">
         <div className="auth-left">
@@ -53,6 +58,7 @@ const Login = () => {
           <img src="/image.png" alt="Login Visual" />
         </div>
       </div>
+    </div>
     </div>
   );
 };
