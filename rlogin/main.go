@@ -1,146 +1,90 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
-	"sync"
+	"time"
 
-	"github.com/gin-contrib/cors"
-	"github.com/gin-gonic/gin"
-	"golang.org/x/crypto/bcrypt"
+	"github.com/golang-jwt/jwt/v4"
 )
 
-// User struct to store user credentials
-type User struct {
-	Username string
-	Password string // Hashed password
+var jwtKey = []byte("your_secret_key")
+
+type Credentials struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
-// In-memory user storage
-var users = make(map[string]User)
-var mu sync.Mutex // Prevents race conditions
-
-// LogoutHandler: Clears the session cookie
-func LogoutHandler(c *gin.Context) {
-	http.SetCookie(c.Writer, &http.Cookie{
-		Name:     "session_id",
-		Value:    "",
-		MaxAge:   -1,
-		HttpOnly: true,
-		Path:     "/",
-	})
-	c.JSON(http.StatusOK, gin.H{"message": "Logout successful"})
+type Claims struct {
+	Email string `json:"email"`
+	jwt.RegisteredClaims
 }
 
-// Main function
+// Enable CORS Middleware
+func enableCORS(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000") // Allow React frontend
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+
+	// Handle OPTIONS request (preflight request)
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+}
+
+func loginHandler(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w, r) // Apply CORS headers
+
+	if r.Method == "OPTIONS" {
+		return // Return early for preflight requests
+	}
+
+	var creds Credentials
+	err := json.NewDecoder(r.Body).Decode(&creds)
+	if err != nil {
+		http.Error(w, "Invalid request", http.StatusBadRequest)
+		return
+	}
+
+	// Dummy user validation (Replace with database check)
+	if creds.Email != "test@example.com" || creds.Password != "password123" {
+		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
+		return
+	}
+
+	// Generate JWT token
+	expirationTime := time.Now().Add(24 * time.Hour)
+	claims := &Claims{
+		Email: creds.Email,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expirationTime),
+		},
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString(jwtKey)
+	if err != nil {
+		http.Error(w, "Could not generate token", http.StatusInternalServerError)
+		return
+	}
+
+	// Respond with JWT
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]string{"token": tokenString})
+}
+
 func main() {
-	router := gin.Default()
+	http.HandleFunc("/api/auth/login", loginHandler)
 
-	// Enable CORS for React frontend (localhost:3000)
-	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000"},
-		AllowMethods:     []string{"GET", "POST", "OPTIONS"},
-		AllowHeaders:     []string{"Content-Type"},
-		AllowCredentials: true,
-	}))
-
-	// Define routes
-	router.POST("/signup", SignupHandler)
-	router.POST("/login", LoginHandler)
-	router.POST("/logout", LogoutHandler)
-	router.GET("/dashboard", AuthMiddleware(), DashboardHandler)
-
-	// Start server
-	router.Run(":8080")
-}
-
-// SignupHandler: Registers a new user
-func SignupHandler(c *gin.Context) {
-	var request struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
-	}
-
-	// Parse JSON request
-	if err := c.ShouldBindJSON(&request); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
-		return
-	}
-
-	mu.Lock()
-	defer mu.Unlock()
-
-	// Check if the user already exists
-	if _, exists := users[request.Username]; exists {
-		c.JSON(http.StatusConflict, gin.H{"error": "User already exists"})
-		return
-	}
-
-	// Hash the password before storing
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(request.Password), bcrypt.DefaultCost)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error hashing password"})
-		return
-	}
-
-	// Store user with hashed password
-	users[request.Username] = User{Username: request.Username, Password: string(hashedPassword)}
-
-	c.JSON(http.StatusCreated, gin.H{"message": "User registered successfully"})
-}
-
-// LoginHandler: Authenticates user
-func LoginHandler(c *gin.Context) {
-	var request struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
-	}
-
-	// Parse request JSON
-	if err := c.ShouldBindJSON(&request); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
-		return
-	}
-
-	mu.Lock()
-	user, exists := users[request.Username]
-	mu.Unlock()
-
-	if !exists {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "User not found"})
-		return
-	}
-
-	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(request.Password))
-	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
-		return
-	}
-
-	// Set cookie for session management
-	http.SetCookie(c.Writer, &http.Cookie{
-		Name:     "session_id",
-		Value:    "authenticated",
-		HttpOnly: true,
-		Path:     "/", // Ensure the cookie is valid for all paths
+	// CORS preflight handler
+	http.HandleFunc("/api/", func(w http.ResponseWriter, r *http.Request) {
+		enableCORS(w, r)
+		w.WriteHeader(http.StatusOK)
 	})
 
-	c.JSON(http.StatusOK, gin.H{"message": "Login successful"})
-}
-
-// AuthMiddleware checks for authenticated users
-func AuthMiddleware() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		sessionCookie, err := c.Request.Cookie("session_id")
-		if err != nil || sessionCookie.Value != "authenticated" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-			c.Abort()
-			return
-		}
-		c.Next()
-	}
-}
-
-// DashboardHandler: Returns a response for the dashboard
-func DashboardHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"message": "Welcome to the dashboard!"})
+	fmt.Println("Server running on port 8080...")
+	http.ListenAndServe(":8080", nil)
 }

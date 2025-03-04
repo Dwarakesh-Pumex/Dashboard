@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+
 import {
   Drawer,
   List,
@@ -36,9 +38,22 @@ export default function Sidebar() {
   const location = useLocation();
   const [open, setOpen] = useState(false);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("jwtToken");
+      if (!token) return;
+
+      await axios.post(
+        "http://localhost:8080/api/auth/logout",
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      localStorage.removeItem("jwtToken");
+      navigate("/login");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
   };
 
   const toggleDrawer = () => {
