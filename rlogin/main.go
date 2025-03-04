@@ -50,7 +50,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Dummy user validation (Replace with database check)
-	if creds.Email != "user@example.com" || creds.Password != "password123" {
+	if creds.Email != "test@example.com" || creds.Password != "password123" {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 		return
 	}

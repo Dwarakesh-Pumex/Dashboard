@@ -53,6 +53,9 @@ const Login = () => {
           <Button onClick={handleLogin} variant="contained" color="primary">
             Login
           </Button>
+          <p>
+          <a href="/ForgotPswd">Forgot Password</a>
+          </p>
         </div>
         <div className="auth-right">
           <img src="/image.png" alt="Login Visual" />

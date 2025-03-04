@@ -53,7 +53,7 @@ export default function Sidebar() {
       navigate("/login");
       alert("Succesfully logged out, Redirecting to login page");
     } catch (err) {
-      console.error("Logout failed:", err);
+      console.error("Logout Failed:", err);
     }
   };
 

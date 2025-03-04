@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Dashboard from "./pages/Dashboard";
 import Overview from "./pages/Overview";
 import Login from "./pages/Login";
+import ForgotPswd from "./pages/ForgotPswd";
 import PrivateRoute from "./components/PrivateRoute"; 
 localStorage.removeItem("jwtToken");
 const theme = createTheme({
@@ -24,7 +25,7 @@ const App = () => {
         <Routes>
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
-
+          <Route path="/ForgotPswd" element={<ForgotPswd />} />
 
           {/* Private Routes (Require Authentication) */}
           <Route element={<PrivateRoute/>}>
