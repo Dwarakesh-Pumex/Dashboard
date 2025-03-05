@@ -39,6 +39,7 @@ const App = () => {
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </Router>
+      <div style={{color:"white",textAlign:"right", paddingRight:"10px",fontSize:"10px"}}>SMD Ver 0.1</div>
     </ThemeProvider>
   );
 };
