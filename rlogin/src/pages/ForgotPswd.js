@@ -4,6 +4,8 @@ import axios from "axios";
 import "./Auth.css";
 import { Button, TextField } from "@mui/material";
 
+
+
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ const ForgotPassword = () => {
   
       const payload = {
         email: email,
-        storefrontUrl: window.location.origin,
+        storefrontUrl: "http://localhost:3000",
       };
   
       const response = await axios.post(

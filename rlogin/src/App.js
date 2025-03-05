@@ -6,6 +6,7 @@ import Overview from "./pages/Overview";
 import Login from "./pages/Login";
 import ForgotPswd from "./pages/ForgotPswd";
 import PrivateRoute from "./components/PrivateRoute"; 
+import ResetPswd from "./pages/ResetPswd";
 localStorage.removeItem("jwtToken");
 const theme = createTheme({
   palette: {
@@ -26,6 +27,7 @@ const App = () => {
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/ForgotPswd" element={<ForgotPswd />} />
+          <Route path="/reset-password" element={<ResetPswd />} />
 
           {/* Private Routes (Require Authentication) */}
           <Route element={<PrivateRoute/>}>

@@ -40,22 +40,15 @@ export default function Sidebar() {
 
   const handleLogout = async () => {
     try {
-      const token = localStorage.getItem("jwtToken");
-      if (!token) return;
-
-      await axios.post(
-        "http://localhost:8080/api/auth/logout",
-        {},
-        { headers: { Authorization: `Bearer ${token}`}
-     } );
-
-      localStorage.removeItem("jwtToken");
-      navigate("/login");
-      alert("Succesfully logged out, Redirecting to login page");
-    } catch (err) {
-      console.error("Logout Failed:", err);
+      await axios.post("http://localhost:8080/api/auth/logout"); // 🔹 Ensure this matches backend
+      localStorage.removeItem("token"); // Clear stored token
+      navigate("/login"); // Redirect to login page
+    } catch (error) {
+      console.error("Logout failed:", error.response?.data || error.message);
+      alert("Logout failed. Please try again.");
     }
   };
+  
 
   const toggleDrawer = () => {
     setOpen(!open);
