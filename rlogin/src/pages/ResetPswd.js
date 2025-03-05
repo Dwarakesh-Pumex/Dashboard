@@ -59,6 +59,9 @@ const ResetPassword = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           margin="normal"
+          InputProps={{
+            style: { color: "black" } 
+          }}
         />
         <h3>Confirm New Password</h3>
         <TextField
@@ -69,6 +72,9 @@ const ResetPassword = () => {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           margin="normal"
+          InputProps={{
+            style: { color: "black" } 
+          }}
         />
         <Button onClick={handleResetPassword} variant="contained" color="primary">
           Submit

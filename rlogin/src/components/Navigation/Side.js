@@ -40,9 +40,10 @@ export default function Sidebar() {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:8080/api/auth/logout"); // 🔹 Ensure this matches backend
-      localStorage.removeItem("token"); // Clear stored token
-      navigate("/login"); // Redirect to login page
+      await axios.post("http://localhost:8080/api/auth/logout"); 
+      localStorage.removeItem("token"); 
+      alert("Logout successful.Redirecting to login page.");
+      navigate("/login"); 
     } catch (error) {
       console.error("Logout failed:", error.response?.data || error.message);
       alert("Logout failed. Please try again.");

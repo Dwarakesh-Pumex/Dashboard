@@ -58,6 +58,9 @@ const ForgotPassword = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             margin="normal"
+            InputProps={{
+              style: { color: "black" } 
+            }}
 
           />
           <Button onClick={handleForgotPassword} variant="contained" color="primary">

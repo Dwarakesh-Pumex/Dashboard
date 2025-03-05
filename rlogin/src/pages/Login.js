@@ -49,6 +49,7 @@ const Login = () => {
             placeholder="Enter Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            style={{color:"black"}}
           />
           <Button onClick={handleLogin} variant="contained" color="primary">
             Login
