@@ -11,10 +11,8 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 )
 
-// JWT Secret Key
-var jwtKey = []byte("your_secret_key")
+var jwtKey = []byte("key_123")
 
-// Demo User (Stored in Memory)
 var demoUser = struct {
 	Email    string
 	Password string
