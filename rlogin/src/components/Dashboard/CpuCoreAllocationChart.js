@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Legend, ResponsiveContainer } from "recharts";
 
 const CpuCoreAllocationChart = () => {
   const [data, setData] = useState([]);
@@ -59,7 +59,7 @@ const CpuCoreAllocationChart = () => {
         <BarChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
         <XAxis dataKey="name" stroke="#CCC" interval="preserveEnd" tickFormatter={(value, index) => (index % Math.ceil(data.length /2 ) === 0 || index === data.length - 1 ? `${value}AM` : "")}/>
           <YAxis stroke="#CCC" interval="preserveEnd"/>
-          <Tooltip />
+          
           <Legend align="right" verticalAlign="middle" layout="vertical" wrapperStyle={{ left: 610 }} />
           <Bar dataKey="App1" stackId="a" fill="#31B969" />
           <Bar dataKey="App2" stackId="a" fill="#BFA836" />

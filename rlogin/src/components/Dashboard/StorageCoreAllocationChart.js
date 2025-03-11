@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, Legend, ResponsiveContainer } from "recharts";
 
 const StorageCoreAllocationChart = () => {
   const [data, setData] = useState([]);
@@ -18,7 +18,7 @@ const StorageCoreAllocationChart = () => {
         const  app5 = Math.floor(Math.random() * 200);
         const  other= Math.floor(Math.random() * 200);
         const sum=app1+app2+app3+app4+app5+other;
-        totalSum += sum;  
+        totalSum += sum;
 
         newData.push({
           name: time,
@@ -52,7 +52,6 @@ const StorageCoreAllocationChart = () => {
         <LineChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
           <XAxis dataKey="name" stroke="#CCC" />
           <YAxis stroke="#CCC" />
-          <Tooltip />
           <Legend align="right" verticalAlign="middle" layout="vertical"  wrapperStyle={{ left: 610 }}/>
           <Line type="monotone" dataKey="App1" stroke="#31B969" />
           <Line type="monotone" dataKey="App2" stroke="#BFA836" />

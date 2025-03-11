@@ -102,7 +102,6 @@ func ResetPassword(c *fiber.Ctx) error {
 
 	// Update In-Memory Password
 	demoUser.Password = req.NewPassword
-
 	return c.JSON(fiber.Map{"message": "Password updated successfully"})
 }
 
