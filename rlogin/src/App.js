@@ -5,9 +5,10 @@ import Dashboard from "./pages/Dashboard";
 import Overview from "./pages/Overview";
 import Login from "./pages/Login";
 import ForgotPswd from "./pages/ForgotPswd";
-import PrivateRoute from "./components/PrivateRoute"; 
+import PrivateRoute from "./components/Navigation/Overview/PrivateRoute"; 
 import ResetPswd from "./pages/ResetPswd";
-localStorage.removeItem("jwtToken");
+import ChangePswd from "./pages/ChangePswd";
+
 const theme = createTheme({
   palette: {
     mode: "dark",
@@ -28,11 +29,14 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/ForgotPswd" element={<ForgotPswd />} />
           <Route path="/reset-password" element={<ResetPswd />} />
+          
+
 
           {/* Private Routes (Require Authentication) */}
           <Route element={<PrivateRoute/>}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/overview" element={<Overview />} />
+            <Route path="/change-password" element={<ChangePswd/>} />
           </Route>
 
           {/* Redirect unknown paths to login */}

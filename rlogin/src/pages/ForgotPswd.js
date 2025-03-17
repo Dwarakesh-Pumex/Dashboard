@@ -7,30 +7,29 @@ import { Button, TextField } from "@mui/material";
 
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
   const handleForgotPassword = async () => {
     try {
-      if (!email) {
+      if (!username) {
         alert("Email field is required");
         return;
       }
   
       
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
+      if (!emailRegex.test(username)) {
         alert("Enter a valid email address");
         return;
       }
   
       const payload = {
-        email: email,
-        storefrontUrl: "http://localhost:3000",
+        username: username,
       };
   
       const response = await axios.post(
-        "http://localhost:8080/api/auth/forgot-password",
+        "http://localhost:8080/auth/forgot-password",
         payload,
         { headers: { "Content-Type": "application/json" } }
       );
@@ -55,8 +54,8 @@ const ForgotPassword = () => {
             label="Email"
             variant="outlined"
             fullWidth
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             margin="normal"
             InputProps={{
               style: { color: "black" } 

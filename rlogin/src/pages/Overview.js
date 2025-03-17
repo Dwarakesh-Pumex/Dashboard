@@ -1,14 +1,16 @@
 import React from "react"; 
 import { Container, Grid, Card, Box } from "@mui/material";
-import InfoCard from "../components/Overview/InfoCard";
-import HostMetrics from "../components/Overview/HostMetrics";
-import EnvironmentalMetrics from "../components/Overview/EnvironmentalMetrics";
-import UtilizationGraph from "../components/Overview/UtilizationGraph";
-import MapCard from "../components/Overview/MapCard";
+import InfoCard from "../components/Navigation/Overview/InfoCard";
+import HostMetrics from "../components/Navigation/Overview/HostMetrics";
+import EnvironmentalMetrics from "../components/Navigation/Overview/EnvironmentalMetrics";
+import UtilizationGraph from "../components/Navigation/Overview/UtilizationGraph";
+import MapCard from "../components/Navigation/Overview/MapCard";
 import Side from "../components/Navigation/Side";
+import Profile from "../components/Dashboard/Profile"
 export default function Overview() {
   return (
     <div>
+      <Profile/>
       {/* System Info Section */}
       <Box sx={{ marginLeft: "180px", marginBottom: "20px",marginTop:"25px" }}>
         <h4 style={{ color: "white", fontSize: "20px", marginBottom: "5px" }}>SYSTEM ID</h4>

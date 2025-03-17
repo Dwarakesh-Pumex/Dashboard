@@ -27,11 +27,11 @@ const ResetPassword = () => {
     try {
       const payload = {
         token: token,
-        newPassword: password,
+        new_password: password,
       };
 
       const response = await axios.post(
-        "http://localhost:8080/api/auth/reset-password",
+        "http://localhost:8080/auth/reset-password",
         payload,
         { headers: { "Content-Type": "application/json" } }
       );

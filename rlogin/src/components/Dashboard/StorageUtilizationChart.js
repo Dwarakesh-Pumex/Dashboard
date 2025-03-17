@@ -1,53 +1,49 @@
 import React, { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
-
+import axios from "axios";
 Chart.register(ArcElement, Tooltip, Legend);
 
 const StorageUtilizationChart = () => {
-  const [cpuUsage, setCpuUsage] = useState(55);
-  const [data, setData] = useState({
-    labels: ["App1", "App2", "App3", "App4", "App5", "Other"],
+  const [StorageUsage, setStorageUsage] = useState(0);
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      const t = localStorage.getItem("jwtToken");
+      try {
+        const response =await axios({
+          method: "get",
+          url: "http://localhost:8080/profile/SystemMetrics",
+          headers: {
+            Authorization: `Bearer ${t.trim()}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        setStorageUsage(response.data.storage.used_percent);
+      } catch (error) {
+        console.error("Error response:", error.response?.data || error.message);
+        console.error("Headers sent:", error.config.headers);
+        console.error("Failed to fetch CPU data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const data = {
+    labels: ["Utilization", "Free"],
     datasets: [
       {
-        data: [10, 20, 15, 18, 12, 25],
-        backgroundColor: ["#31B969", "#BFA836", "#1B5CC6", "#BF2525", "#703494", "#344247"],
-        hoverBackgroundColor: ["#28A75A", "#A89030", "#1650A6", "#A01F1F", "#5E2B82", "#2A3535"],
+        data: [StorageUsage, 100 - StorageUsage],
+        backgroundColor: ["#31B969", "#344247"],
+        hoverBackgroundColor: ["#28A75A", "#344247"],
         borderWidth: 0,
         hoverOffset: 6,
       },
     ],
-  });
-
-  useEffect(() => {
-    const updateData = () => {
-      const newCpuUsage = Math.floor(Math.random() * 100);
-
-      const app1 = Math.floor(newCpuUsage * 0.25);
-      const app2 = Math.floor(newCpuUsage * 0.20);
-      const app3 = Math.floor(newCpuUsage * 0.15);
-      const app4 = Math.floor(newCpuUsage * 0.18);
-      const app5 = Math.floor(newCpuUsage * 0.12);
-      const other = Math.max(100 - (app1 + app2 + app3 + app4 + app5), 0); 
-
-      setCpuUsage(newCpuUsage);
-      setData({
-        labels: ["App1", "App2", "App3", "App4", "App5", "Other"],
-        datasets: [
-          {
-            data: [app1, app2, app3, app4, app5, other],
-            backgroundColor: ["#31B969", "#BFA836", "#1B5CC6", "#BF2525", "#703494", "#344247"],
-            hoverBackgroundColor: ["#28A75A", "#A89030", "#1650A6", "#A01F1F", "#5E2B82", "#2A3535"],
-          },
-        ],
-      });
-    };
-
-    updateData();
-    const interval = setInterval(updateData, 5000); 
-
-    return () => clearInterval(interval);
-  }, []);
+  };
 
   const options = {
     cutout: "80%", 
@@ -64,7 +60,7 @@ const StorageUtilizationChart = () => {
     <div style={{ textAlign: "left", marginLeft: "10px" }}>
       <h3 style={{ marginBottom: "5px" }}>Top Apps - Storage Utilization</h3>
       <p style={{ marginBottom: "45px",marginTop: "0px", fontSize: "14px" }}>
-        MIN:0%  MAX:100%  CURRENT:{cpuUsage}%
+        MIN:0%  MAX:100%  CURRENT:{Math.round(StorageUsage)}%
       </p>
       <div style={{ width: "250px", margin: "0 auto",marginBottom: "70px", position:"relative" }}>
               <Doughnut data={data} options={options} />
@@ -74,8 +70,9 @@ const StorageUtilizationChart = () => {
                 viewBox="0 0 120 120"
                 style={{ position: "absolute", top: "58%", left: "41%", transform: "translate(-50%, -50%)" }}
               >
+               
                 <circle
-                  cx="60"
+                  cx="50"
                   cy="60"
                   r="50"
                   fill="none"
@@ -84,17 +81,18 @@ const StorageUtilizationChart = () => {
                   strokeDasharray="3,7"
                 />
                 
-                <text x="50%" y="45%" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold">
-                  {2048-cpuUsage}
+               
+                <text x="43%" y="45%" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold">
+                  {Math.round(StorageUsage)}%
                 </text>
-                <text x="50%" y="60%" textAnchor="middle" fill="#888888" fontSize="12">
-                  GB Used
+                <text x="43%" y="60%" textAnchor="middle" fill="#888888" fontSize="12">
+                  Utilization
                 </text>
               </svg>
             </div>
             <div style={{ textAlign: "center", marginTop: "-70px",marginBottom:"48px"}}>
-             <span style={{  fontSize: "14px", color: "#888888",marginRight:"10px" }}>0GB</span>
-             <span style={{  fontSize: "14px", color: "#888888",marginLeft:"50px",marginRight:"38px" }}>4,000GB</span>
+             <span style={{  fontSize: "14px", color: "#888888",marginRight:"25px" }}>0%</span>
+             <span style={{  fontSize: "14px", color: "#888888",marginLeft:"40px",marginRight:"50px" }}>100%</span>
             </div>
     </div>
   );

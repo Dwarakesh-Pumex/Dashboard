@@ -39,16 +39,34 @@ export default function Sidebar() {
   const [open, setOpen] = useState(false);
 
   const handleLogout = async () => {
+    const t = localStorage.getItem("jwtToken")?.trim();
+    if (!t) {
+      alert("No valid token found. Please log in again.");
+      navigate("/login");
+      return;
+    }
+
+  
     try {
-      await axios.post("http://localhost:8080/api/auth/logout"); 
-      localStorage.removeItem("token"); 
-      alert("Logout successful.Redirecting to login page.");
-      navigate("/login"); 
+      const response = await axios.post(
+        "http://localhost:8080/profile/logout",
+        {}, 
+        {
+          headers: {
+            Authorization: `Bearer ${t}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      localStorage.removeItem("jwtToken"); 
+      alert(response.data.message || "Logged out successfully.");
+      navigate("/login");
     } catch (error) {
       console.error("Logout failed:", error.response?.data || error.message);
       alert("Logout failed. Please try again.");
     }
   };
+  
   
 
   const toggleDrawer = () => {

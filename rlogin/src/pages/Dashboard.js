@@ -9,10 +9,13 @@ import StorageCoreAllocationChart from '../components/Dashboard/StorageCoreAlloc
 import GpuUtilizationChart from '../components/Dashboard/GpuUtilizationChart';
 import GpuCoreAllocationChart from '../components/Dashboard/GpuCoreAllocationChart';
 import Side from '../components/Navigation/Side';
-
+import Profile from '../components/Dashboard/Profile'
 const Dashboard = () => {
+  
+  
   return (
     <div>
+    <Profile/>
       {/* System Info Section */}
       <Box sx={{ marginLeft: "180px", marginBottom: "20px",marginTop:"25px" }}>
         <h4 style={{ color: "white", fontSize: "20px", marginBottom: "5px" }}>SYSTEM ID</h4>
@@ -126,6 +129,8 @@ const Dashboard = () => {
       </Container>
     </div>
   );
+  
 };
+
 
 export default Dashboard;

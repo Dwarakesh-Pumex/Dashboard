@@ -1,51 +1,47 @@
 import React, { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
-
+import axios from "axios";
 
 const CpuUtilizationChart = () => {
-  const [cpuUsage, setCpuUsage] = useState(55);
-  const [data, setData] = useState({
-    labels: ["App1", "App2", "App3", "App4", "App5", "Other"],
-    datasets: [
-      {
-        data: [10, 20, 15, 18, 12, 25],
-        backgroundColor: ["#31B969", "#BFA836", "#1B5CC6", "#BF2525", "#703494", "#344247"],
-        hoverBackgroundColor: ["#28A75A", "#A89030", "#1650A6", "#A01F1F", "#5E2B82", "#2A3535"],
-      },
-    ],
-  });
+  const [cpuUsage, setCpuUsage] = useState(0);
 
   useEffect(() => {
-    const updateData = () => {
-      const newCpuUsage = Math.floor(Math.random() * 100);
 
-      const app1 = Math.floor(newCpuUsage * 0.25);
-      const app2 = Math.floor(newCpuUsage * 0.20);
-      const app3 = Math.floor(newCpuUsage * 0.15);
-      const app4 = Math.floor(newCpuUsage * 0.18);
-      const app5 = Math.floor(newCpuUsage * 0.12);
-      const other = Math.max(100 - (app1 + app2 + app3 + app4 + app5), 0); 
-
-      setCpuUsage(newCpuUsage);
-      setData({
-        labels: ["App1", "App2", "App3", "App4", "App5", "Other"],
-        datasets: [
-          {
-            data: [app1, app2, app3, app4, app5, other],
-            backgroundColor: ["#31B969", "#BFA836", "#1B5CC6", "#BF2525", "#703494", "#344247"],
-            hoverBackgroundColor: ["#28A75A", "#A89030", "#1650A6", "#A01F1F", "#5E2B82", "#2A3535"],
-            borderWidth: 0, 
-            hoverOffset: 6,
-          },
-        ],     
-      });
+    const fetchData = async () => {
+      const t = localStorage.getItem("jwtToken");
+      try {
+        const response =await axios({
+          method: "get",
+          url: "http://localhost:8080/profile/SystemMetrics",
+          headers: {
+            Authorization: `Bearer ${t.trim()}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        setCpuUsage(Math.round(response.data.cpu.usage_percent));
+      } catch (error) {
+        console.error("Error response:", error.response?.data || error.message);
+        console.error("Headers sent:", error.config.headers);
+        console.error("Failed to fetch CPU data:", error);
+      }
     };
 
-    updateData();
-    const interval = setInterval(updateData, 5000); 
-
-    return () => clearInterval(interval);
+    fetchData();
   }, []);
+
+  const data = {
+    labels: ["Utilization", "Free"],
+    datasets: [
+      {
+        data: [cpuUsage, 100 - cpuUsage],
+        backgroundColor: ["#31B969", "#344247"],
+        hoverBackgroundColor: ["#28A75A", "#344247"],
+        borderWidth: 0,
+        hoverOffset: 6,
+      },
+    ],
+  };
 
   const options = {
     cutout: "80%", 
@@ -74,7 +70,7 @@ const CpuUtilizationChart = () => {
               >
                
                 <circle
-                  cx="60"
+                  cx="50"
                   cy="60"
                   r="50"
                   fill="none"
@@ -84,17 +80,17 @@ const CpuUtilizationChart = () => {
                 />
                 
                
-                <text x="50%" y="45%" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold">
+                <text x="43%" y="45%" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold">
                   {cpuUsage}%
                 </text>
-                <text x="50%" y="60%" textAnchor="middle" fill="#888888" fontSize="12">
+                <text x="43%" y="60%" textAnchor="middle" fill="#888888" fontSize="12">
                   Utilization
                 </text>
               </svg>
             </div>
             <div style={{ textAlign: "center", marginTop: "-70px",marginBottom:"48px"}}>
-             <span style={{  fontSize: "14px", color: "#888888",marginRight:"10px" }}>0%</span>
-             <span style={{  fontSize: "14px", color: "#888888",marginLeft:"50px",marginRight:"38px" }}>100%</span>
+             <span style={{  fontSize: "14px", color: "#888888",marginRight:"25px" }}>0%</span>
+             <span style={{  fontSize: "14px", color: "#888888",marginLeft:"40px",marginRight:"50px" }}>100%</span>
             </div>
     </div>
   );
