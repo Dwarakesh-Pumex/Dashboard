@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
-import axios from "axios";
+import { useSystemMetrics } from '../../context/SystemMetricsContext';
 
 const CpuUtilizationChart = () => {
   const [cpuUsage, setCpuUsage] = useState(0);
 
-  useEffect(() => {
+  /*useEffect(() => {
 
     const fetchData = async () => {
       const t = localStorage.getItem("jwtToken");
@@ -18,7 +18,7 @@ const CpuUtilizationChart = () => {
             'Content-Type': 'application/json'
           }
         });
-        
+        console.log(response.data.cpu.usage_percent);
         setCpuUsage(Math.round(response.data.cpu.usage_percent));
       } catch (error) {
         console.error("Error response:", error.response?.data || error.message);
@@ -28,8 +28,13 @@ const CpuUtilizationChart = () => {
     };
 
     fetchData();
-  }, []);
-
+  }, []);*/
+  
+  const { metrics, loading, error } = useSystemMetrics();
+  useEffect(() => {
+  setCpuUsage(Math.round(metrics?.cpu?.usage_percent));},[metrics?.cpu?.usage_percent]);
+  if (loading) return <p>Loading metrics...</p>;
+  if (error) return <p>Error: {error}</p>;
   const data = {
     labels: ["Utilization", "Free"],
     datasets: [

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography, Divider } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom'; 
-import axios from 'axios';
 const ProfileMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);

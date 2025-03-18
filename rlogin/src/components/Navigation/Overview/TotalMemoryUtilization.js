@@ -1,47 +1,20 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
-import axios from "axios";
+import { useSystemMetrics } from "../../../context/SystemMetricsContext";
 
 const TotalMemoryUtilization = () => {
   const [MemUsage, setMemUsage] = useState(0);
   const [MemGB, setMemGB] = useState(0);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const t = localStorage.getItem("jwtToken")?.trim();
-      if (!t) {
-        console.warn("No token found in localStorage.");
-        return;
-      }
+  const { metrics, loading, error } = useSystemMetrics();
+          useEffect(() => {
+          setMemUsage(Math.round(metrics?.memory?.used_percent));
+          setMemGB(Math.round(metrics?.memory?.total_gb));},[metrics?.memory?.used_percent,metrics?.memory?.total_gb]);
+          if (loading) return <p>Loading metrics...</p>;
+          if (error) return <p>Error: {error}</p>;
 
-      try {
-        const response = await axios.get(
-          "http://localhost:8080/profile/SystemMetrics",
-          {
-            headers: {
-              Authorization: `Bearer ${t}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        const newMemUsage = response.data.memory.used_percent;
-        const newMemGB = response.data.memory.total_gb;
-
-        if (newMemUsage !== MemUsage) setMemUsage(newMemUsage);
-        if (newMemGB !== MemGB) setMemGB(newMemGB);
-
-      } catch (error) {
-        console.error("Error response:", error.response?.data || error.message);
-        console.error("Headers sent:", error.config?.headers);
-      }
-    };
-
-    fetchData();
-  }, [MemUsage, MemGB]); // Depend on MemUsage and MemGB to prevent endless calls
-
-  // Memoized chart data to prevent unnecessary recreation
-  const data = useMemo(() => ({
+ 
+  const data = {
     labels: ["Utilization", "Free"],
     datasets: [
       {
@@ -52,7 +25,7 @@ const TotalMemoryUtilization = () => {
         hoverOffset: 6,
       },
     ],
-  }), [MemUsage]);
+  }
 
   const options = {
     cutout: "80%",

@@ -1,47 +1,19 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
-import axios from "axios";
+import { useSystemMetrics } from "../../../context/SystemMetricsContext";
 
 const TotalStorageUtilization = () => {
   const [StorageUsage, setStorageUsage] = useState(0);
   const [StorageGB, setStorageGB] = useState(0);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const t = localStorage.getItem("jwtToken")?.trim();
-      if (!t) {
-        console.warn("No token found in localStorage.");
-        return;
-      }
+    const { metrics, loading, error } = useSystemMetrics();
+            useEffect(() => {
+            setStorageUsage(Math.round(metrics?.storage?.used_percent));
+            setStorageGB(Math.round(metrics?.storage?.total_gb));},[metrics?.storage?.used_percent,metrics?.storage?.total_gb]);
+            if (loading) return <p>Loading metrics...</p>;
+            if (error) return <p>Error: {error}</p>;
 
-      try {
-        const response = await axios.get(
-          "http://localhost:8080/profile/SystemMetrics",
-          {
-            headers: {
-              Authorization: `Bearer ${t}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        const newStorageUsage = response.data.storage.used_percent;
-        const newStorageGB = response.data.storage.total_gb;
-
-        if (newStorageUsage !== StorageUsage) setStorageUsage(newStorageUsage);
-        if (newStorageGB !== StorageGB) setStorageGB(newStorageGB);
-
-      } catch (error) {
-        console.error("Error response:", error.response?.data || error.message);
-        console.error("Headers sent:", error.config?.headers);
-      }
-    };
-
-    fetchData();
-  }, [StorageUsage, StorageGB]); // Prevents infinite re-renders
-
-  // Memoized data for performance improvement
-  const data = useMemo(() => ({
+  const data = {
     labels: ["Utilization", "Free"],
     datasets: [
       {
@@ -52,7 +24,7 @@ const TotalStorageUtilization = () => {
         hoverOffset: 6,
       },
     ],
-  }), [StorageUsage]);
+  }
 
   const options = {
     cutout: "80%",

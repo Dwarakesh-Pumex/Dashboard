@@ -1,51 +1,33 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect} from "react";
 import { Doughnut } from "react-chartjs-2";
-import axios from "axios";
+import { useWeatherMetrics } from "../../../context/WeatherMetricsContext";
 
 const TemperatureCard = () => {
   const [Temp, setTemp] = useState(0);
   const [TempW, setTempW] = useState("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const t = localStorage.getItem("jwtToken")?.trim();
-      if (!t) {
-        console.warn("No token found in localStorage.");
-        return;
+  const { metrics, loading, error } = useWeatherMetrics();
+  
+    useEffect(() => {
+      setTemp(Math.round((metrics?.temperature)* 9 / 5 + 32 || 0)); 
+    }, [metrics?.temperature]);
+  
+    useEffect(() => {
+      if (Temp <= 68) {
+        setTempW("Low");
+      } else if (Temp > 68 && Temp <= 72) {
+        setTempW("Normal");
+      } else {
+        setTempW("High");
       }
-
-      try {
-        const response = await axios.get(
-          "http://localhost:8080/profile/weather/Tukwila",
-          {
-            headers: {
-              Authorization: `Bearer ${t}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        const temperature = response.data.temperature;
-        setTemp(Math.round((temperature * 9/5) + 32));
-
-        if (temperature <= 68) {
-          setTempW("Low");
-        } else if (temperature > 68 && temperature <= 72) {
-          setTempW("Normal");
-        } else {
-          setTempW("High");
-        }
-      } catch (error) {
-        console.error("Error response:", error.response?.data || error.message);
-        console.error("Headers sent:", error.config?.headers);
-      }
-    };
-
-    fetchData();
-  }, []); 
+    }, [Temp]);
 
   
-  const data = useMemo(() => ({
+    if (loading) return <p>Loading metrics...</p>;
+    if (error) return <p>Error: {error}</p>;
+
+  
+  const data = {
     labels: ["Temperature"],
     datasets: [
       {
@@ -56,7 +38,7 @@ const TemperatureCard = () => {
         hoverOffset: 6,
       },
     ],
-  }), [Temp]);
+  }
 
   const options = {
     cutout: "80%",

@@ -1,34 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
-import axios from "axios";
+import { useSystemMetrics } from "../../../context/SystemMetricsContext";
 
 const TotalCpuUtilization = () => {
   const [cpuUsage, setCpuUsage] = useState(0);
 
-  useEffect(() => {
-
-    const fetchData = async () => {
-      const t = localStorage.getItem("jwtToken");
-      try {
-        const response =await axios({
-          method: "get",
-          url: "http://localhost:8080/profile/SystemMetrics",
-          headers: {
-            Authorization: `Bearer ${t.trim()}`,
-            'Content-Type': 'application/json'
-          }
-        });
-        
-        setCpuUsage(Math.round(response.data.cpu.usage_percent));
-      } catch (error) {
-        console.error("Error response:", error.response?.data || error.message);
-        console.error("Headers sent:", error.config.headers);
-        console.error("Failed to fetch CPU data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+      const { metrics, loading, error } = useSystemMetrics();
+        useEffect(() => {
+        setCpuUsage(Math.round(metrics?.cpu?.usage_percent));},[metrics?.cpu?.usage_percent]);
+        if (loading) return <p>Loading metrics...</p>;
+        if (error) return <p>Error: {error}</p>;
 
   const data = {
     labels: ["Utilization", "Free"],

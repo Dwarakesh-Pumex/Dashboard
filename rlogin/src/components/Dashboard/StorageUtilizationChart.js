@@ -1,36 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
-import axios from "axios";
+import { useSystemMetrics } from '../../context/SystemMetricsContext';
 Chart.register(ArcElement, Tooltip, Legend);
 
 const StorageUtilizationChart = () => {
   const [StorageUsage, setStorageUsage] = useState(0);
 
-  useEffect(() => {
-
-    const fetchData = async () => {
-      const t = localStorage.getItem("jwtToken");
-      try {
-        const response =await axios({
-          method: "get",
-          url: "http://localhost:8080/profile/SystemMetrics",
-          headers: {
-            Authorization: `Bearer ${t.trim()}`,
-            'Content-Type': 'application/json'
-          }
-        });
-        
-        setStorageUsage(response.data.storage.used_percent);
-      } catch (error) {
-        console.error("Error response:", error.response?.data || error.message);
-        console.error("Headers sent:", error.config.headers);
-        console.error("Failed to fetch CPU data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+    const { metrics, loading, error } = useSystemMetrics();
+      useEffect(() => {
+      setStorageUsage(Math.round(metrics?.storage?.used_percent));},[metrics?.storage?.used_percent]);
+      if (loading) return <p>Loading metrics...</p>;
+      if (error) return <p>Error: {error}</p>;
 
   const data = {
     labels: ["Utilization", "Free"],

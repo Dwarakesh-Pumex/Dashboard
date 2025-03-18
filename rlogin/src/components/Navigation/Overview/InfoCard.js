@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Circle } from "@mui/icons-material";
 import './InfoCard.css';
-import axios from "axios";
+import { useWeatherMetrics} from "../../../context/WeatherMetricsContext";
 
 export default function InfoCard() {
   const [deviceInfo, setDeviceInfo] = useState({
@@ -9,48 +9,39 @@ export default function InfoCard() {
     sections: [],
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const t = localStorage.getItem("jwtToken")?.trim();
-      if (!t) {
-        console.warn("No token found in localStorage.");
-        return;
-      }
 
-      try {
-        const response = await axios.get(
-          "http://localhost:8080/profile/weather/Tukwila",
-          {
-            headers: {
-              Authorization: `Bearer ${t}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+  const [Humidity, setHumidity] = useState(0);
+  const[Temperature,setTemperature]=useState(0);
+  const { metrics, loading, error } = useWeatherMetrics();
+  
 
-        const temperature = Math.round((response.data.temperature) * 9 / 5 + 32);
-        const humidity = response.data.humidity;
+  
+        useEffect(() => {
+          setHumidity(Math.round(metrics?.humidity || 0));
+          setTemperature(Math.round(metrics?.temperature || 0));
+        }, [metrics?.humidity, metrics?.temperature]);
+        const temperature = Math.round((Temperature) * 9 / 5 + 32);
+        
+        useEffect(() => {
+          setDeviceInfo({
+            deviceID: "GAL-NM-6234",
+            sections: [
+              { label: "Status", value: "Healthy", icon: "check_circle" },
+              { label: "Security", value: "Doors Armed", icon: "check_circle" },
+              { label: "Temperature", value: temperature, icon: "info" },
+              { label: "Humidity", value: Humidity, icon: "info" },
+              { label: "Fire Suppression", value: true, icon: "check_circle" },
+              { label: "Physical Address", value: "1932 East Marginal Way S, Tukwila" },
+              { label: "Days Without Incident", value: "80 days" },
+              { label: "Serial Number", value: "0301923-1253711-231-3" },
+            ],
+          });
+          
+        }, [temperature, Humidity]);
 
-        setDeviceInfo({
-          deviceID: "GAL-NM-6234",
-          sections: [
-            { label: "Status", value: "Healthy", icon: "check_circle" },
-            { label: "Security", value: "Doors Armed", icon: "check_circle" },
-            { label: "Temperature", value: temperature, icon: "info" },
-            { label: "Humidity", value: humidity, icon: "info" },
-            { label: "Fire Suppression", value: true, icon: "check_circle" },
-            { label: "Physical Address", value: "1932 East Marginal Way S, Tukwila" },
-            { label: "Days Without Incident", value: "80 days" },
-            { label: "Serial Number", value: "0301923-1253711-231-3" },
-          ],
-        });
-      } catch (error) {
-        console.error("Error response:", error.response?.data || error.message);
-      }
-    };
-
-    fetchData();
-  }, []);
+        if (loading) return <p>Loading metrics...</p>;
+        if (error) return <p>Error: {error}</p>;
+        
 
   const sectionMap = Object.fromEntries(deviceInfo.sections.map(item => [item.label, item.value]));
 
