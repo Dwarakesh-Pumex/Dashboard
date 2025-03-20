@@ -44,7 +44,7 @@ const CpuCoreAllocationChart = () => {
     };
 
     generateData();
-    const interval = setInterval(generateData, 5000);
+    const interval = setInterval(generateData, 10000);
 
     return () => clearInterval(interval);
   }, []);

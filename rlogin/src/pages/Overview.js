@@ -53,11 +53,11 @@ export default function Overview() {
 
           {/* Host Metrics */}
           <Grid item xs={12}>
-            <Grid>
+            
               <Card sx={{ backgroundColor: "#102127", padding: "15px" }}>
                 <HostMetrics />
               </Card>
-            </Grid>
+            
           </Grid>
 
           {/* Utilization Graph */}

@@ -23,8 +23,10 @@ const Dashboard = () => {
       </Box>
 
       <Container maxWidth="lg" sx={{ backgroundColor: '#01141A', padding: '20px' }}>
+      <Side/>
+      
         <Grid container spacing={3}>
-          <Side />
+          
 
           {/* CPU Section */}
           <Grid item xs={12}>

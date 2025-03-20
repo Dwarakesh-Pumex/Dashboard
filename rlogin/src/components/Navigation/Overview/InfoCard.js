@@ -11,14 +11,14 @@ export default function InfoCard() {
 
 
   const [Humidity, setHumidity] = useState(0);
-  const[Temperature,setTemperature]=useState(0);
+  const [Temperature,setTemperature]=useState(0);
   const { metrics, loading, error } = useWeatherMetrics();
   
 
   
         useEffect(() => {
           setHumidity(Math.round(metrics?.humidity || 0));
-          setTemperature(Math.round(metrics?.temperature || 0));
+          setTemperature(metrics?.temperature || 0);
         }, [metrics?.humidity, metrics?.temperature]);
         const temperature = Math.round((Temperature) * 9 / 5 + 32);
         
@@ -63,7 +63,7 @@ export default function InfoCard() {
         ? "#29A15A"
         : label === "Temperature" && sectionMap[label] <= 60
           ? "#29A15A"
-          : label === "Humidity" && sectionMap[label] <= 60
+          : label === "Humidity" && sectionMap[label] <= 72
             ? "#29A15A"
             : "red",
     fontSize: "10px",
@@ -74,7 +74,7 @@ export default function InfoCard() {
               <span>
                 {sectionMap[label]} {label === "Temperature" && "°F"}{" "}
                 {["Humidity"].includes(label) && (
-                  sectionMap[label] <= 60 ? "- Normal" : "- High"
+                  sectionMap[label] <= 72 ? "- Normal" : "- High"
                 )}
               </span>
               <hr />

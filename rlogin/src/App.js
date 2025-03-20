@@ -10,6 +10,8 @@ import PrivateRoute from './components/Navigation/Overview/PrivateRoute';
 import ResetPswd from './pages/ResetPswd';
 import ChangePswd from './pages/ChangePswd';
 import { WeatherMetricsProvider } from './context/WeatherMetricsContext';
+import { Slide, ToastContainer } from 'react-toastify';
+
 
 const theme = createTheme({
   palette: {
@@ -25,6 +27,17 @@ const theme = createTheme({
 const App = () => (
   <SystemMetricsProvider>
     <WeatherMetricsProvider>
+    <ToastContainer position="top-right"
+autoClose={3000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss={false}
+draggable={false}
+pauseOnHover
+theme="dark"
+transition={Slide}/>
     <ThemeProvider theme={theme}>
       <Router>
         <Routes>
@@ -52,7 +65,7 @@ const App = () => (
           fontSize: '10px',
         }}
       >
-        SMD Ver 0.1
+        SMD Ver 1.0
       </div>
     </ThemeProvider>
     </WeatherMetricsProvider>

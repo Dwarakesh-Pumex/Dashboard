@@ -199,7 +199,7 @@ func ResetPassword(c *gin.Context) {
 	// Find the user by the reset token
 	err := userCollection.FindOne(ctx, bson.M{"reset_token": passwordResetInput.Token}).Decode(&foundUser)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired reset token"})
+		c.JSON(http.StatusUnauthorized, gin.H {"error": "Invalid or expired reset token"})
 		return
 	}
 

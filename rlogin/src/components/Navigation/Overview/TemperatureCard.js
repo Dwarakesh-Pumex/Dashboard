@@ -9,7 +9,7 @@ const TemperatureCard = () => {
   const { metrics, loading, error } = useWeatherMetrics();
   
     useEffect(() => {
-      setTemp(Math.round((metrics?.temperature)* 9 / 5 + 32 || 0)); 
+      setTemp((Math.round((metrics?.temperature)* 9 / 5 + 32 || 0))); 
     }, [metrics?.temperature]);
   
     useEffect(() => {

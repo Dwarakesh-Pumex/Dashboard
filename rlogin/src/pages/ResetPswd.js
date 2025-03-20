@@ -3,6 +3,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./Auth.css";
 import { Button, TextField } from "@mui/material";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
@@ -15,12 +18,12 @@ const ResetPassword = () => {
 
   const handleResetPassword = async () => {
     if (!password) {
-      alert("Password field is required.");
+      toast.warn("Password field is required.");
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match.");
+      toast.warn("Passwords do not match.");
         return;
     }
 
@@ -37,11 +40,11 @@ const ResetPassword = () => {
       );
 
       if (response.status === 200) {
-        alert("Password reset successful! You can now log in.");
+        toast.success("Password reset successful! You can now log in.");
         navigate("/login");
       }
     } catch (error) {
-      alert(error.response?.data?.message || "Error resetting password. Try again.");
+      toast.error(error.response?.data?.message || "Error resetting password. Try again.");
     }
   };
 

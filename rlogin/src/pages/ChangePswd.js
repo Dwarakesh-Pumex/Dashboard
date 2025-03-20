@@ -3,6 +3,8 @@ import axios from "axios";
 import "./Auth.css";
 import { Button, TextField } from "@mui/material";
 import { useNavigate,} from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const ChangePassword = () => {
@@ -13,7 +15,7 @@ const ChangePassword = () => {
 
   const handleChangePassword = async () => {
     if ((!newPassword)&&(!oldPassword)&&(!username)) {
-      alert("All Fields are required.");
+      toast.warn("All Fields are required.");
       return;
     }
 
@@ -35,16 +37,14 @@ const ChangePassword = () => {
             }
         );
 
-        console.log('Password changed successfully:', response.data.message);
-        alert('Password changed successfully!');
+        toast.success(response.data.message);
         navigate("/login");
     } catch (error) {
         if (error.response) {
-            console.error('Error response:', error.response.data.error);
-            alert(`Error: ${error.response.data.error}`);
+            
+            toast.error(error.response.data.error);
         } else {
-            console.error('Error:', error.message);
-            alert('Error changing password. Please try again.');
+            toast.error(error.response.data.error)
         }
     }
   };
@@ -55,14 +55,15 @@ const ChangePassword = () => {
       <div className="auth-frgtpswd">
       <h2>Change Password</h2>
         <h3>Enter Username</h3>
+        <form onSubmit={handleChangePassword} >
         <TextField
-          label="Username"
           variant="outlined"
           type="text"
           fullWidth
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           margin="normal"
+          autoComplete="username"
           InputProps={{
             style: { color: "black" } 
           }}
@@ -70,13 +71,13 @@ const ChangePassword = () => {
 
         <h3>Enter Old Password</h3>
         <TextField
-          label="old Password"
           variant="outlined"
           type="password"
           fullWidth
           value={oldPassword}
           onChange={(e) => setOldPassword(e.target.value)}
           margin="normal"
+          autoComplete="oldPassword"
           InputProps={{
             style: { color: "black" } 
           }}
@@ -91,11 +92,13 @@ const ChangePassword = () => {
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
           margin="normal"
+          autoComplete="newpassword"
           InputProps={{
             style: { color: "black" } 
            
           }}
         />
+        </form>
         <Button onClick={handleChangePassword} variant="contained" color="primary">
           Submit
         </Button>

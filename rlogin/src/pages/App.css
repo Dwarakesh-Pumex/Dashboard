@@ -36,6 +36,10 @@
   margin-right: 5px;
 }
 
+.Toastify__toast-container {
+  z-index: 9999 !important;
+}
+
 
 
 @keyframes App-logo-spin {

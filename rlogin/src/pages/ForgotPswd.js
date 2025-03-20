@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Auth.css";
 import { Button, TextField } from "@mui/material";
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const ForgotPassword = () => {
@@ -35,11 +36,11 @@ const ForgotPassword = () => {
       );
   
       if (response.status === 200) {
-        alert("Password reset link has been sent to your email.");
+        toast.info("Password reset link has been sent to your email.");
         navigate("/login");
       }
     } catch (err) {
-      alert(err.response?.data?.message || "Error sending password reset link");
+      toast.error(err.response?.data?.message || "Error sending password reset link");
     }
   };
   

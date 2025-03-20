@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   Drawer,
   List,
@@ -59,11 +60,11 @@ export default function Sidebar() {
         }
       );
       localStorage.removeItem("jwtToken"); 
-      alert(response.data.message || "Logged out successfully.");
+      localStorage.removeItem("username");
+      toast.success(response.data.message || "Logged out successfully.");
       navigate("/login");
     } catch (error) {
-      console.error("Logout failed:", error.response?.data || error.message);
-      alert("Logout failed. Please try again.");
+      toast.error("Logout failed. Please try again.");
     }
   };
   
@@ -81,7 +82,7 @@ export default function Sidebar() {
         anchor="left"
         sx={{
           width: open ? 240 : 70,
-          flexShrink: 0,
+          flexShrink: 8,
           "& .MuiDrawer-paper": {
             width: open ? 240 : 70,
             transition: "width 0.3s ease-in-out",
