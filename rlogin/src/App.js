@@ -65,7 +65,7 @@ transition={Slide}/>
           fontSize: '10px',
         }}
       >
-        SMD Ver 1.0
+        SMD Ver 1.1
       </div>
     </ThemeProvider>
     </WeatherMetricsProvider>

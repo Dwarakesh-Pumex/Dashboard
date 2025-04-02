@@ -14,14 +14,14 @@ const ForgotPassword = () => {
   const handleForgotPassword = async () => {
     try {
       if (!username) {
-        alert("Email field is required");
+        toast.error("Email field is required");
         return;
       }
   
       
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(username)) {
-        alert("Enter a valid email address");
+        toast.error("Enter a valid email address");
         return;
       }
   
@@ -40,7 +40,7 @@ const ForgotPassword = () => {
         navigate("/login");
       }
     } catch (err) {
-      toast.error(err.response?.data?.message || "Error sending password reset link");
+      toast.error(err.response.data.error);
     }
   };
   
@@ -52,16 +52,23 @@ const ForgotPassword = () => {
           <h2>Forgot Password</h2>
           <h3>Enter Registered Email ID</h3>
           <TextField
-            label="Email"
             variant="outlined"
             fullWidth
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": { borderColor: "#A9A9A9" }, 
+                "&:hover fieldset": { borderColor: "black" }, 
+                "&.Mui-focused fieldset": { borderColor: "black" }, 
+              },
+            }}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             margin="normal"
             InputProps={{
-              style: { color: "black" } 
+              style: { 
+                color: "black", 
+              }
             }}
-
           />
           <Button onClick={handleForgotPassword} variant="contained" color="primary">
             Submit

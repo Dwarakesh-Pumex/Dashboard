@@ -46,8 +46,8 @@ export default function Sidebar() {
       navigate("/login");
       return;
     }
-
-  
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
     try {
       const response = await axios.post(
         "http://localhost:8080/profile/logout",
@@ -66,6 +66,7 @@ export default function Sidebar() {
     } catch (error) {
       toast.error("Logout failed. Please try again.");
     }
+  }
   };
   
   
@@ -84,7 +85,7 @@ export default function Sidebar() {
           width: open ? 240 : 70,
           flexShrink: 8,
           "& .MuiDrawer-paper": {
-            width: open ? 240 : 70,
+            width: open ? 240 : 60,
             transition: "width 0.3s ease-in-out",
             overflow: "hidden",
             backgroundColor: theme.palette.background.paper,
@@ -112,7 +113,7 @@ export default function Sidebar() {
                 }}
               >
                 <ListItemIcon sx={{ minWidth: open ? "40px" : "50px", marginRight: "25px" }}>
-                  <img src="./dashboard icon.png" alt="Dashboard" style={{ width: "38px", height: "38px" }} />
+                  <img src="./dashboard icon.png" alt="Dashboard" style={{ width: "28px", height: "28px" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Dashboard"
@@ -136,7 +137,7 @@ export default function Sidebar() {
                 }}
               >
                 <ListItemIcon sx={{ minWidth: open ? "40px" : "50px", marginRight: "25px" }}>
-                  <img src="./overview icon.png" alt="Overview" style={{ width: "38px", height: "38px" }} />
+                  <img src="./overview icon.png" alt="Overview" style={{ width: "28px", height: "px" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Overview"
@@ -161,8 +162,8 @@ export default function Sidebar() {
                   "&:hover": { backgroundColor: "#BF2525" },
                 }}
               >
-                <ListItemIcon sx={{ minWidth: open ? "40px" : "50px", marginLeft: "5px", marginRight: "24px" }}>
-                  <img src="./logout icon.png" alt="Logout" style={{ width: "30px", height: "30px" }} />
+                <ListItemIcon sx={{ minWidth: open ? "40px" : "50px",marginRight: "25px" }}>
+                  <img src="./logout icon.png" alt="Logout" style={{ width: "28px", height: "28px" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Logout"

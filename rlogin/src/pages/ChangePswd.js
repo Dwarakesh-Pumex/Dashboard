@@ -57,12 +57,20 @@ const ChangePassword = () => {
         <h3>Enter Username</h3>
         <form onSubmit={handleChangePassword} >
         <TextField
+          color="primary"
           variant="outlined"
           type="text"
           fullWidth
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": { borderColor: "#A9A9A9" }, 
+              "&:hover fieldset": { borderColor: "black" }, 
+              "&.Mui-focused fieldset": { borderColor: "black" }, 
+            },
+          }}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          margin="normal"
+          margin= "color: 'black'"
           autoComplete="username"
           InputProps={{
             style: { color: "black" } 
@@ -71,9 +79,17 @@ const ChangePassword = () => {
 
         <h3>Enter Old Password</h3>
         <TextField
+          color="black"
           variant="outlined"
           type="password"
           fullWidth
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": { borderColor: "#A9A9A9" }, 
+              "&:hover fieldset": { borderColor: "black" }, 
+              "&.Mui-focused fieldset": { borderColor: "black" }, 
+            },
+          }}
           value={oldPassword}
           onChange={(e) => setOldPassword(e.target.value)}
           margin="normal"
@@ -85,10 +101,16 @@ const ChangePassword = () => {
 
         <h3>Enter New Password</h3>
         <TextField
-          label="New Password"
           variant="outlined"
           type="password"
           fullWidth
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": { borderColor: "#A9A9A9" }, 
+              "&:hover fieldset": { borderColor: "black" }, 
+              "&.Mui-focused fieldset": { borderColor: "black" }, 
+            },
+          }}
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
           margin="normal"
