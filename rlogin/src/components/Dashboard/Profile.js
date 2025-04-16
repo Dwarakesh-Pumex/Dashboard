@@ -4,7 +4,6 @@ import {
   Box,
   IconButton,
   Menu,
-  MenuItem,
   Tooltip,
   Typography,
   Divider,
@@ -27,7 +26,6 @@ const ProfileMenu = () => {
 
 
 
-  // Load saved names from localStorage
   useEffect(() => {
     setFirstName(localStorage.getItem('firstName') || '');
     setLastName(localStorage.getItem('lastName') || '');
@@ -38,7 +36,7 @@ const ProfileMenu = () => {
 
   const handleChangePassword = () => {
     handleClose();
-    navigate('/change-password');
+    navigate('/changepassword');
   };
 
   const handleSaveName = () => {
@@ -100,7 +98,9 @@ const ProfileMenu = () => {
           </Box>
         ) : (
           <Box sx={{ paddingX: '15px', paddingBottom: '10px' }}>
-            <Typography variant="body1">{(firstName+' '+lastName)|| 'N/A'}</Typography>
+            <Typography variant="body1">
+             {firstName || lastName ? `${firstName || ""} ${lastName || ""}`.trim() : "N/A"}
+             </Typography>
             <Typography variant="body1">{username}</Typography>
           </Box>
         )}

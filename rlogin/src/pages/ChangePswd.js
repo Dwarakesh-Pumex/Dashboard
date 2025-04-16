@@ -2,130 +2,218 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./Auth.css";
 import { Button, TextField } from "@mui/material";
-import { useNavigate,} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [username,setUsername]= useState("")
+  const [username, setUsername] = useState("");
+  const [oldpasswordVisible, setoldPasswordVisible] = useState(false);
+  const [newpasswordVisible, setnewPasswordVisible] = useState(false);
+  const [error, setError] = useState("");
+  const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
   const navigate = useNavigate();
 
-  const handleChangePassword = async () => {
-    if ((!newPassword)&&(!oldPassword)&&(!username)) {
-      toast.warn("All Fields are required.");
+  const handleInputChange = (setter) => (e) => {
+    setter(e.target.value);
+    if (error) {
+      setError("");
+    }
+  };
+
+  const toggleoldPasswordVisibility = () => {
+    setoldPasswordVisible(!oldpasswordVisible);
+  };
+
+  const togglenewPasswordVisibility = () => {
+    setnewPasswordVisible(!newpasswordVisible);
+  };
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+
+    if (!newPassword || !oldPassword || !username) {
+      toast.error("All Fields are required.");
       return;
     }
 
-    const token = localStorage.getItem('jwtToken'); 
+    if (!strongPassword.test(newPassword)) {
+      setError("Password must be at least 8 characters and include uppercase, lowercase, number, and special character.");
+      return;
+    }
+
+    if (newPassword === oldPassword) {
+      toast.error("New Password and Old Password should not be same.");
+      return;
+    }
+
+    const token = localStorage.getItem('jwtToken');
 
     try {
-        const response = await axios.post(
-            'http://localhost:8080/profile/change-password',
-            {
-                username,
-                oldPassword,
-                newPassword
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            }
-        );
-
-        toast.success(response.data.message);
-        navigate("/login");
-    } catch (error) {
-        if (error.response) {
-            
-            toast.error(error.response.data.error);
-        } else {
-            toast.error(error.response.data.error)
+      const response = await axios.post(
+        'http://localhost:8080/profile/change-password',
+        { username, oldPassword, newPassword },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
         }
+      );
+
+      toast.success(response.data.message);
+      navigate("/changepasswordsuccess");
+    } catch (error) {
+      if (error.response) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
     }
   };
 
   return (
-    <div style={{backgroundImage: "url(/giphy.gif)", backgroundSize: "cover", height: "100vh",backgroundRepeat: "no-repeat"}}>
-    <div className="auth-container">
-      <div className="auth-frgtpswd">
-      <h2>Change Password</h2>
-        <h3>Enter Username</h3>
-        <form onSubmit={handleChangePassword} >
-        <TextField
-          color="primary"
-          variant="outlined"
-          type="text"
-          fullWidth
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": { borderColor: "#A9A9A9" }, 
-              "&:hover fieldset": { borderColor: "black" }, 
-              "&.Mui-focused fieldset": { borderColor: "black" }, 
-            },
-          }}
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          margin= "color: 'black'"
-          autoComplete="username"
-          InputProps={{
-            style: { color: "black" } 
-          }}
-        />
+    <div style={{ backgroundImage: "url(/giphy.gif)", backgroundSize: "cover", height: "100vh", backgroundRepeat: "no-repeat" }}>
+      <div className="auth-container">
+        <div className="auth-frgtpswd">
+          <h2>Change Password</h2>
+          <form onSubmit={handleChangePassword}>
+            <div style={{ marginBottom: "24px" }}>
+              <h3>Enter Username</h3>
+              <TextField
+                variant="outlined"
+                type="text"
+                fullWidth
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": { borderColor: "#A9A9A9" },
+                    "&:hover fieldset": { borderColor: "black" },
+                    "&.Mui-focused fieldset": { borderColor: "black" },
+                  },
+                }}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                InputProps={{
+                  style: { color: "black" }
+                }}
+              />
+            </div>
 
-        <h3>Enter Old Password</h3>
-        <TextField
-          color="black"
-          variant="outlined"
-          type="password"
-          fullWidth
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": { borderColor: "#A9A9A9" }, 
-              "&:hover fieldset": { borderColor: "black" }, 
-              "&.Mui-focused fieldset": { borderColor: "black" }, 
-            },
-          }}
-          value={oldPassword}
-          onChange={(e) => setOldPassword(e.target.value)}
-          margin="normal"
-          autoComplete="oldPassword"
-          InputProps={{
-            style: { color: "black" } 
-          }}
-        />
+            <div style={{ marginBottom: "24px" }}>
+              <h3>Enter Old Password</h3>
+              <div style={{ position: 'relative' }}>
+                <TextField
+                  variant="outlined"
+                  type={oldpasswordVisible ? "text" : "password"}
+                  fullWidth
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderColor: "#A9A9A9" },
+                      "&:hover fieldset": { borderColor: "black" },
+                      "&.Mui-focused fieldset": { borderColor: "black" },
+                    },
+                  }}
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                  autoComplete="oldPassword"
+                  InputProps={{
+                    style: { color: "black" }
+                  }}
+                />
+                <div style={{ position: 'absolute', top: '55%', right: '30px', transform: 'translateY(-50%)' }}>
+                <button
+  type="button"
+  onClick={toggleoldPasswordVisibility} 
+  style={{
+    background: "transparent",
+    border: "none",
+    padding: "0",
+    cursor: "pointer",
+    outline: "none",
+    width: "24px",
+    height: "24px",
+  }}
+>
+  <img
+    src={oldpasswordVisible ? "/eye-open.svg" : "/eye-closed.svg"} 
+    alt="Toggle visibility"
+    style={{
+      opacity: "0.7",
+      width: "45px",
+      height: "45px",
+    }}
+  />
+</button>
+                </div>
+              </div>
+            </div>
 
-        <h3>Enter New Password</h3>
-        <TextField
-          variant="outlined"
-          type="password"
-          fullWidth
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": { borderColor: "#A9A9A9" }, 
-              "&:hover fieldset": { borderColor: "black" }, 
-              "&.Mui-focused fieldset": { borderColor: "black" }, 
-            },
-          }}
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          margin="normal"
-          autoComplete="newpassword"
-          InputProps={{
-            style: { color: "black" } 
-           
-          }}
-        />
-        </form>
-        <Button onClick={handleChangePassword} variant="contained" color="primary">
-          Submit
-        </Button>
+            <div style={{ marginBottom: "24px" }}>
+              <h3>Enter New Password</h3>
+              <div style={{ position: 'relative' }}>
+                <TextField
+                  variant="outlined"
+                  type={newpasswordVisible ? "text" : "password"}
+                  fullWidth
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderColor: "#A9A9A9" },
+                      "&:hover fieldset": { borderColor: "black" },
+                      "&.Mui-focused fieldset": { borderColor: "black" },
+                    },
+                  }}
+                  value={newPassword}
+                  onChange={handleInputChange(setNewPassword)}
+                  autoComplete="newpassword"
+                  InputProps={{
+                    style: { color: "black" }
+                  }}
+                />
+                <div style={{ position: 'absolute', top: '55%', right: '30px', transform: 'translateY(-50%)' }}>
+                <button
+  type="button"
+  onClick={togglenewPasswordVisibility} 
+  style={{
+    background: "transparent",
+    border: "none",
+    padding: "0",
+    cursor: "pointer",
+    outline: "none",
+    width: "24px",
+    height: "24px",
+  }}
+>
+  <img
+    src={newpasswordVisible ? "/eye-open.svg" : "/eye-closed.svg"} 
+    alt="Toggle visibility"
+    style={{
+      opacity: "0.7",
+      width: "45px",
+      height: "45px",
+    }}
+  />
+</button>
+
+                </div>
+              </div>
+            </div>
+
+            {error && (
+              <div style={{ color: "red", fontSize: "15px", marginBottom: "24px" }}>
+                <p className="error">{error}</p>
+              </div>
+            )}
+
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "24px" }}>
+              <Button type="submit" variant="contained" color="primary">
+                Submit
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
     </div>
   );
 };

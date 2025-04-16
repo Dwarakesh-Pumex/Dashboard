@@ -82,10 +82,10 @@ export default function Sidebar() {
         variant="permanent"
         anchor="left"
         sx={{
-          width: open ? 240 : 70,
+          width: open ? 160 : 60,
           flexShrink: 8,
           "& .MuiDrawer-paper": {
-            width: open ? 240 : 60,
+            width: open ? 160 : 60,
             transition: "width 0.3s ease-in-out",
             overflow: "hidden",
             backgroundColor: theme.palette.background.paper,
@@ -112,7 +112,7 @@ export default function Sidebar() {
                   "&:hover": { backgroundColor: "#055060" },
                 }}
               >
-                <ListItemIcon sx={{ minWidth: open ? "40px" : "50px", marginRight: "25px" }}>
+                <ListItemIcon sx={{ minWidth: open ? "40px" : "50px" }}>
                   <img src="./dashboard icon.png" alt="Dashboard" style={{ width: "28px", height: "28px" }} />
                 </ListItemIcon>
                 <ListItemText
@@ -136,7 +136,7 @@ export default function Sidebar() {
                   "&:hover": { backgroundColor: "#055060" },
                 }}
               >
-                <ListItemIcon sx={{ minWidth: open ? "40px" : "50px", marginRight: "25px" }}>
+                <ListItemIcon sx={{ minWidth: open ? "40px" : "50px"}}>
                   <img src="./overview icon.png" alt="Overview" style={{ width: "28px", height: "px" }} />
                 </ListItemIcon>
                 <ListItemText
@@ -162,7 +162,7 @@ export default function Sidebar() {
                   "&:hover": { backgroundColor: "#BF2525" },
                 }}
               >
-                <ListItemIcon sx={{ minWidth: open ? "40px" : "50px",marginRight: "25px" }}>
+                <ListItemIcon sx={{ minWidth: open ? "40px" : "50px"}}>
                   <img src="./logout icon.png" alt="Logout" style={{ width: "28px", height: "28px" }} />
                 </ListItemIcon>
                 <ListItemText

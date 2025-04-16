@@ -199,7 +199,7 @@ func ResetPassword(c *gin.Context) {
 	// Find the user by the reset token
 	err := userCollection.FindOne(ctx, bson.M{"reset_token": passwordResetInput.Token}).Decode(&foundUser)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H {"error": "Invalid or expired reset token"})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired reset token"})
 		return
 	}
 
@@ -245,7 +245,7 @@ func SendResetEmail(toEmail string, resetToken string) error {
 	fmt.Println("Sender-", sender)
 	fmt.Println("password-", password)
 
-	resetLink := fmt.Sprintf("http://localhost:3000/reset-password?token=%s", resetToken)
+	resetLink := fmt.Sprintf("http://localhost:3000/resetpassword?token=%s", resetToken)
 	subject := "Subject: Password Reset Request\n"
 	body := fmt.Sprintf("Click the following link to reset your password: %s", resetLink)
 	message := []byte(subject + "\n" + body)

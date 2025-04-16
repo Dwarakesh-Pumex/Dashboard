@@ -5,7 +5,6 @@ import "./Auth.css";
 import { Button } from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 const Login = () => {
   const navigate = useNavigate();
   const isAuthenticated = localStorage.getItem("jwtToken");
@@ -18,7 +17,12 @@ const Login = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState("");
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
   const notifySuccess = (message) => {
     toast.success(message);
@@ -47,16 +51,14 @@ const Login = () => {
       const { token } = response.data;
       localStorage.setItem("jwtToken", token);
       localStorage.setItem("username", username);
-      const firstName = localStorage.getItem('firstName');
-      if (!firstName) {
-        notifySuccess(`Login Successful\nWelcome, (set username)!`);
-        navigate("/dashboard");
+      const firstName = localStorage.getItem("firstName");
+      if (firstName) {
+        notifySuccess(`Login Successful\nWelcome, ${firstName}!`);
       }
       else {
-        notifySuccess(`Login Successful\nWelcome, ${firstName}!`);
-        navigate("/dashboard");
+        notifySuccess(`Login Successful\nWelcome, (Set Name in Profile)`);
       }
-      
+      navigate("/dashboard");
     } catch (err) {
       let errorMessage = "Unexpected error occurred.";
       if (err.response) {
@@ -69,7 +71,6 @@ const Login = () => {
     }
   };
 
-  // Clears error when user types in any field
   const handleInputChange = (setter) => (e) => {
     setter(e.target.value);
     if (error) {
@@ -102,14 +103,21 @@ const Login = () => {
                 onChange={handleInputChange(setUsername)}
                 autoComplete="username"
               />
-              <input
-                type="password"
-                placeholder="Enter Password"
-                value={password}
-                onChange={handleInputChange(setPassword)}
-                autoComplete="current-password"
-                style={{ color: "black" }}
-              />
+<div className="password-field">
+  <input
+    type={passwordVisible ? "text" : "password"}
+    placeholder="Enter Password"
+    value={password}
+    onChange={handleInputChange(setPassword)}
+    autoComplete="current-password"
+    id="password"
+    style={{ color: "black" }}
+  />
+  <button type="button" id="show-password" onClick={togglePasswordVisibility}>
+    <img src={passwordVisible ? "/eye-open.svg" : "/eye-closed.svg"} alt="Toggle visibility" />
+  </button>
+</div>
+
               <Button type="submit" variant="contained" color="primary">
                 Login
               </Button>

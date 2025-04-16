@@ -9,6 +9,9 @@ import ForgotPswd from './pages/ForgotPswd';
 import PrivateRoute from './components/Navigation/Overview/PrivateRoute';
 import ResetPswd from './pages/ResetPswd';
 import ChangePswd from './pages/ChangePswd';
+import ResetPswdSuccess from './pages/ResetPswdSuccess';
+import ForgotPswdMail from './pages/ForgotPswdMail';
+import ChangePswdSuccess from './pages/ChangePswdSuccess';
 import { WeatherMetricsProvider } from './context/WeatherMetricsContext';
 import { Slide, ToastContainer } from 'react-toastify';
 
@@ -44,13 +47,15 @@ transition={Slide}/>
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/ForgotPswd" element={<ForgotPswd />} />
-          <Route path="/reset-password" element={<ResetPswd />} />
-
+          <Route path="/ForgotPswdMail" element={<ForgotPswdMail/>} />
+          <Route path="/resetpassword" element={<ResetPswd />} />
+          <Route path="/resetpasswordsuccess" element={<ResetPswdSuccess />} />
+          <Route path="/changepasswordsuccess" element={<ChangePswdSuccess />} />
           {/* Private Routes */}
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/overview" element={<Overview />} />
-            <Route path="/change-password" element={<ChangePswd />} />
+            <Route path="/changepassword" element={<ChangePswd />} />
           </Route>
 
           {/* Redirect unknown paths to login */}

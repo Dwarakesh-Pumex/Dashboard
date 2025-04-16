@@ -85,3 +85,71 @@
 .Toastify__toast-container {
   z-index: 9999 !important;
 }
+
+.password-field {
+  position: relative;
+}
+
+#show-password {
+  opacity: 0.6;
+  position: absolute;
+  right: -1.3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 1.5rem;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  background-color: transparent;
+}
+
+#show-password img{
+  
+  width: 35px;
+  height: 35px;
+}
+
+.forgot-password-container {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.blurred-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+}
+
+.message-box {
+  position: absolute;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 350px;
+}
+
+.message-box h2 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.message-box p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.auth-container {
+  position: relative;
+  z-index: 10;
+}
